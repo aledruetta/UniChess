@@ -143,4 +143,4 @@ cython_debug/
 
 
 # vim
-*.sw[pon]$
+*.sw[pon]
