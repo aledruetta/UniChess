@@ -15,15 +15,8 @@ Para testar:
     make install
 ```
 
-- Exportar variáveis de ambiente
-
-```bash
-    export FLASK_ENV=development
-    export FLASK_APP=xadrez.app
-```
-
 - Executar
 
 ```bash
-    flask run
+    make run
 ```
