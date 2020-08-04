@@ -1,37 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   {% block head %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UniChess</title>
+  <title>{{ title }}</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
   {% endblock head %}
 
   {% block extra_css %} {% endblock extra_css %}
+
   <!-- the below three lines are a fix to get HTML5 semantic elements working in old versions of Internet Explorer-->
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
+
 </head>
 
 <body>
-  {% block nav %}
-  {% endblock nav %}
 
-  <section>
-    <div class="container">
-      {% block main %} {% endblock main %}
-    </div>
-  </section>
+  {% block nav %} {% endblock nav %}
+
+  {% block main %} {% endblock main %}
 
   {% block footer %}
-    <footer>
-      <div>
-        <p>
-          Copyright bla, bla, bla.
-        </p>
-      </div>
-    </footer>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+      <strong>{{ title }}</strong> by <a href="https://github.com/aledruetta">Alejandro
+        Druetta</a>. The source code is licensed
+        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+      </p>
+    </div>
+  </footer>
+
   {% endblock footer %}
+
+  <script defer
+          src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </body>
 </html>

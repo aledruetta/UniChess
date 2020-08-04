@@ -6,4 +6,10 @@ bp = Blueprint('site', __name__)
 
 @bp.route('/')
 def index():
-    return render_template('index.html')
+    cell = [['.' for _ in range(8)] for _ in range(8)]
+
+    return render_template(
+        'index.html',
+        title='UniChess',
+        cell=cell,
+    )
