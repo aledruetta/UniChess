@@ -15,24 +15,29 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section chessboard">
     <div class="container">
-      <div class="chessboard">
+      <div class="columns is-centered">
 
-      {% for i in range(8) -%}
-      <div class="columns">
-        {%- for j in range(8) -%}
-        <div class="column is-narrow {{ color[i][j] }}">
-          <div class="cell">
-          {{ cell[i][j] }}
+        <div class="column is-half">
+          <div class="board">
+            {% for i in range(8) -%}
+            <div class="columns is-centered">
+              {%- for j in range(8) -%}
+              <div class="column is-narrow {{ color[i][j] }}">
+                <div class="cell">
+                {{ cell[i][j] }}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% endfor %}
+            </div>
           </div>
-        </div>
-        {% endfor %}
-      </div>
-      {% endfor %}
 
       </div>
     </div>
   </section>
+
 
 {% endblock main %}
