@@ -19,20 +19,20 @@
     <div class="container">
       <div class="columns is-centered">
 
-        <div class="column is-half">
+        <div class="column">
           <div class="board">
             {% for i in range(8) -%}
-            <div class="columns is-centered">
+            <div class="board-row">
               {%- for j in range(8) -%}
-              <div class="column is-narrow {{ color[i][j] }}">
-                <div class="cell">
-                {{ cell[i][j] }}
-                </div>
+              <div class="board-cell {{ color[i][j] }}">
+              {{ cell[i][j] }}
               </div>
               {% endfor %}
             </div>
             {% endfor %}
             </div>
+          </div>
+          <div class="column has-background-dark has-text-light console">
           </div>
 
       </div>

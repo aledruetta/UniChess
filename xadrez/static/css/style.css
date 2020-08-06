@@ -1,6 +1,31 @@
-.cell {
+.board {
+  margin: auto;
+  border: 2px solid black;
+  width: 292px;
+  height: 292px;
+}
+
+.board-row {
+}
+
+.board-cell {
+  float: left;
   width: 36px;
   height: 36px;
   text-align: center;
   font-size: 1.5em;
+}
+
+.board-cell-black {
+  background-color: black;
+  color: white;
+}
+
+.board-cell-white {
+  background-color: white;
+  color: black;
+}
+
+.console {
+  border-radius: 10px;
 }

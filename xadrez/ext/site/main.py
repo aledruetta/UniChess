@@ -21,9 +21,9 @@ def colors():
         lst.append([])
         for j in range(8):
             if (i * 8 + j + inc) % 2 == 0:
-                color = 'has-background-black has-text-white'
+                color = 'board-cell-black'
             else:
-                color = 'has-background-white has-text-black'
+                color = 'board-cell-white'
             lst[i].append(color)
         inc += 1
 
