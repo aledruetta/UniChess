@@ -24,9 +24,9 @@
             {% for i in range(8) -%}
             <div class="board-row">
               {%- for j in range(8) -%}
-              <div class="board-cell {{ color[i][j] }}">
-                {% if cell[i][j] is not none %}
-                  {{ cell[i][j] }}
+              <div class="board-cell {{ colors[i][j] }}">
+                {% if board[i][j] is not none %}
+                  {{ board[i][j] }}
                 {% endif %}
               </div>
               {% endfor %}

@@ -37,6 +37,6 @@ def index():
     return render_template(
         'index.html',
         title='UniChess',
-        cell=board,
-        color=board.colors
+        board=board,
+        colors=board.colors
     )
