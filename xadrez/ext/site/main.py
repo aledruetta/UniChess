@@ -38,5 +38,6 @@ def index():
         'index.html',
         title='UniChess',
         board=board,
-        colors=board.colors
+        colors=board.colors,
+        code_col=list(' ABCDEFGH'),
     )

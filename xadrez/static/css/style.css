@@ -1,11 +1,12 @@
 .board {
-  margin: auto;
+  float: right;
   border: 2px solid black;
   width: 292px;
   height: 292px;
 }
 
-.board-row {
+.code-rows {
+  float: left;
 }
 
 .board-cell {
@@ -24,6 +25,29 @@
 .board-cell-white {
   background-color: white;
   color: black;
+}
+
+.code-col {
+  float: left;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  padding: 0.5em;
+  font-size: 1em;
+}
+
+.code-rows {
+  height: 292px;
+  text-align: center;
+  font-size: 1em;
+}
+
+.code-row {
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  padding: 0.5em;
+  font-size: 1em;
 }
 
 .console {
