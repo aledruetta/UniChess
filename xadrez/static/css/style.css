@@ -51,5 +51,8 @@
 }
 
 .console {
-  border-radius: 10px;
+  margin-top: 12px;
+  max-width: 352px;
+  height: 320px;
+  border-radius: 6px;
 }
