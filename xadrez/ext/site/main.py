@@ -4,37 +4,39 @@ from flask import Blueprint, render_template
 bp = Blueprint('site', __name__)
 
 
-def start_position():
-    cell = [[' ' for _ in range(8)] for _ in range(8)]
-    cell[0] = ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜']
-    cell[1] = ['♟' for _ in range(8)]
-    cell[-1] = ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖']
-    cell[-2] = ['♙' for _ in range(8)]
+class ChessBoard:
+    def __init__(self):
+        self.board = []
+        self.init_status()
 
-    return cell
+    def init_status(self):
+        self.board = [[None for _ in range(8)] for _ in range(8)]
+        self.board[0] = ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜']
+        self.board[1] = ['♟' for _ in range(8)]
+        self.board[-1] = ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖']
+        self.board[-2] = ['♙' for _ in range(8)]
 
+    @property
+    def colors(self):
+        board = []
+        b = 'board-cell-black'
+        w = 'board-cell-white'
+        for i in range(4):
+            board.append(list([b, w] * 4))
+            board.append(list([w, b] * 4))
 
-def colors():
-    lst = []
-    inc = 0
-    for i in range(8):
-        lst.append([])
-        for j in range(8):
-            if (i * 8 + j + inc) % 2 == 0:
-                color = 'board-cell-black'
-            else:
-                color = 'board-cell-white'
-            lst[i].append(color)
-        inc += 1
+        return board
 
-    return lst
+    def __getitem__(self, i):
+        return self.board[i]
 
 
 @bp.route('/')
 def index():
+    board = ChessBoard()
     return render_template(
         'index.html',
         title='UniChess',
-        cell=start_position(),
-        color=colors(),
+        cell=board,
+        color=board.colors
     )
