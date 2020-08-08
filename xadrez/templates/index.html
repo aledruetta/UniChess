@@ -60,6 +60,18 @@
         </div><!-- End column -->
 
         <div class="column has-background-dark has-text-light console">
+          <form action="{{ url_for('site.index') }}" method="post">
+						<div class="field has-addons">
+							<div class="control">
+								<input class="input is-small" type="text" placeholder="Próxima jogada">
+							</div>
+							<div class="control">
+								<a class="button is-primary is-small">
+									Mover
+								</a>
+							</div>
+						</div>
+          </form>
         </div>
 
       </div>
