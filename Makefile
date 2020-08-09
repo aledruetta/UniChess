@@ -10,6 +10,6 @@ run:
 
 
 format:
-	isort **/*.py
-	black -l 79 **/*.py
-	flake8 **/*.py
+	isort .
+	black -l 79 -t py38 .
+	flake8 setup.py xadrez

@@ -20,58 +20,6 @@
       <div class="columns is-centered">
 
         <div class="column is-narrow">
-
-          <div class="code-rows">
-            {%- for i in range(8) -%}
-            <div class="code-row">
-              {{ 8 - i }}
-            </div>
-            {% endfor %}
-          </div>
-
-          <div class="board">
-
-            {% for i in range(8) -%}
-            <div class="board-row">
-
-              {% for j in range(8) -%}
-
-              <div class="board-cell {{ colors[i][j] }}">
-                {% if board[i][j] is not none %}
-                  {{ board[i][j] }}
-                {% endif %}
-              </div><!-- End column -->
-
-              {% endfor %}
-
-            </div><!-- End row -->
-            {% endfor %}
-
-          </div><!-- End board -->
-
-          <div class="code-cols">
-            {%- for i in range(9) -%}
-            <div class="code-col">
-              {{ code_col[i] }}
-            </div>
-            {% endfor %}
-          </div>
-
-        </div><!-- End column -->
-
-        <div class="column has-background-dark has-text-light console">
-          <form action="{{ url_for('site.index') }}" method="post">
-						<div class="field has-addons">
-							<div class="control">
-								<input class="input is-small" type="text" placeholder="Próxima jogada">
-							</div>
-							<div class="control">
-								<a class="button is-primary is-small">
-									Mover
-								</a>
-							</div>
-						</div>
-          </form>
         </div>
 
       </div>

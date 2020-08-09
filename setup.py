@@ -6,11 +6,11 @@ def read(filename):
 
 
 setup(
-    name='xadrez',
-    version='0.1.0',
-    description='Online Chess Game',
+    name="xadrez",
+    version="0.1.0",
+    description="Online Chess Game",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=read('requirements.txt'),
-    extras_require={'dev': read('requirements-dev.txt')},
+    install_requires=read("requirements.txt"),
+    extras_require={"dev": read("requirements-dev.txt")},
 )
