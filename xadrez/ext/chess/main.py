@@ -1,5 +1,7 @@
 import chess
 import chess.svg
-from flask import Blueprint
 
-bp = Blueprint("chess", __name__)
+
+def create_board():
+    board = chess.Board()
+    return chess.svg.board(board=board)
