@@ -15,3 +15,10 @@ def index():
     return render_template(
         "index.html", title="UniChess", board=create_board(),
     )
+
+
+@bp.route("/board")
+def board():
+    return render_template(
+        "board.html", title="UniChess Board", board=create_board()
+    )
