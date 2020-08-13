@@ -2,7 +2,7 @@
 
 from flask import Flask
 
-from xadrez.ext import site, toolbar, config
+from xadrez.ext import config, site, toolbar
 
 
 def create_app():
