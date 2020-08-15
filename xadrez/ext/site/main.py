@@ -15,18 +15,21 @@ def save_board(board, mode="a"):
         fd.write(board.fen() + "\n")
 
 
-def load_board():
-    with open("jogo.txt") as fd:
-        lines = fd.readlines()
-
-    return lines[-1]
-
-
 def create_board():
     board = chess.Board()
     save_board(board, "w")
 
     return board
+
+
+def load_board():
+    try:
+        with open("jogo.txt") as fd:
+            lines = fd.readlines()
+            if len(lines) > 0:
+                return chess.Board(lines[-1])
+    except FileNotFoundError:
+        return create_board()
 
 
 def render_board(board):
@@ -36,6 +39,7 @@ def render_board(board):
 @bp.route("/")
 def index():
     board = create_board()
+
     return render_template(
         "index.html", title="UniChess", board=render_board(board),
     )
@@ -44,7 +48,7 @@ def index():
 @bp.route("/board", methods=["GET", "POST"])
 def board():
     form = MoveForm(request.form)
-    board = chess.Board(load_board())
+    board = load_board()
 
     if request.method == "POST" and form.validate():
         m = chess.Move.from_uci(form.movement.data)

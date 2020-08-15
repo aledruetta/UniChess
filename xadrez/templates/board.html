@@ -13,14 +13,14 @@
           {{ board | safe }}
           </div>
           <div>
-            <form action="" method="post">
+            <form role="form" action="" method="post">
 
 							<div class="field has-addons">
 								<div class="control is-expanded">
                   {{ form.movement(placeholder="Próxima jogada", class="input", type="text") }}
 								</div>
 								<div class="control">
-									<a class="button is-dark">
+									<button class="button is-dark" type="submit">
 										Mover
 									</a>
 								</div>
