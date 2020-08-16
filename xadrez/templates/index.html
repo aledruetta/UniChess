@@ -11,7 +11,27 @@
       <div class="columns is-centered">
 
         <div class="column is-half">
-          {{ board | safe }}
+
+          <div>
+            {{ board | safe }}
+          </div>
+
+          <form role="form" action="" method="post">
+
+            <div class="field">
+              <div class="control">
+                {{
+                  form.play(
+                    class="button is-danger is-outlined is-rounded is-medium is-fullwidth",
+                    type="submit",
+                    value="Jogar",
+                  )
+                }}
+              </div>
+            </div>
+
+          </form>
+
         </div>
 
       </div>

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 from wtforms import Form, StringField, validators
 
 from xadrez.ext.engine import UniBoard
@@ -10,12 +10,24 @@ class MoveForm(Form):
     movement = StringField("movement", [validators.Length(min=4, max=4)])
 
 
-@bp.route("/")
+class PlayForm(Form):
+    play = StringField("play")
+
+
+@bp.route("/", methods=["GET", "POST"])
 def index():
     board = UniBoard()
+    form = PlayForm(request.form)
+
+    if request.method == "POST":
+        board.uni_save(mode="w")
+        return redirect(url_for("site.board"))
 
     return render_template(
-        "index.html", title="UniChess", board=board.uni_render(),
+        "index.html",
+        title="UniChess",
+        board=board.uni_render(),
+        form=form,
     )
 
 
