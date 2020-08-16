@@ -7,7 +7,7 @@ bp = Blueprint("site", __name__)
 
 
 class MoveForm(Form):
-    movement = StringField("movement", [validators.Length(min=2, max=4)])
+    movement = StringField("movement", [validators.Length(min=4, max=4)])
 
 
 @bp.route("/")
@@ -27,7 +27,6 @@ def board():
 
     if request.method == "POST" and form.validate():
         board.uni_move(form.movement.data)
-        board.uni_save()
 
     return render_template(
         "board.html",
