@@ -3,7 +3,8 @@ import chess.svg
 
 
 class UniBoard(chess.Board):
-    def __init__(self, fen=chess.STARTING_FEN):
+    def __init__(self, board_id, fen=chess.STARTING_FEN):
+        self.id = board_id
         super().__init__(fen)
 
     def uni_save(self, uci=None, mode="a"):
