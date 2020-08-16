@@ -2,31 +2,30 @@ import chess
 import chess.svg
 
 
-def save_board(board, mode="a"):
-    with open("jogo.txt", mode) as fd:
-        fd.write(board.fen() + "\n")
+class UniBoard(chess.Board):
+    def __init__(self, fen=chess.STARTING_FEN):
+        super().__init__(fen)
+        self.uni_save("w")
 
+    def uni_save(self, mode="a"):
+        with open("jogo.txt", mode) as fd:
+            fd.write(self.fen() + "\n")
 
-def create_board():
-    board = chess.Board()
-    save_board(board, "w")
+    def uni_load(self):
+        try:
+            with open("jogo.txt") as fd:
+                lines = fd.readlines()
+                if len(lines) > 0:
+                    self = chess.Board(lines[-1])
+        except FileNotFoundError:
+            self.reset()
+            self.uni_save("w")
 
-    return board
+    def uni_render(self):
+        return chess.svg.board(board=self)
 
-
-def load_board():
-    try:
-        with open("jogo.txt") as fd:
-            lines = fd.readlines()
-            if len(lines) > 0:
-                return chess.Board(lines[-1])
-    except FileNotFoundError:
-        return create_board()
-
-
-def render_board(board):
-    return chess.svg.board(board=board)
-
-
-def move_piece(uci):
-    return chess.Move.from_uci(uci)
+    def uni_move(self, uci):
+        movement = chess.Move.from_uci(uci)
+        if movement in self.legal_moves:
+            self.push(movement)
+            self.uni_save()
