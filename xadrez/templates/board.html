@@ -4,37 +4,38 @@
 
 {% block main %}
 
-  <section class="section chessboard">
-    <div class="container">
-      <div class="columns is-centered">
+<section class="section chessboard">
+  <div class="container">
+    <div class="columns is-centered">
 
-        <div class="column is-half">
-          <div>
+      <div class="column is-half">
+
+        <div>
           {{ board | safe }}
-          </div>
-          <div>
-            <form role="form" action="" method="post">
-
-							<div class="field has-addons">
-								<div class="control is-expanded">
-                  {{ form.movement(placeholder="Próxima jogada", class="input", type="text") }}
-								</div>
-								<div class="control">
-									<button class="button is-dark" type="submit">
-										Mover
-									</button>
-								</div>
-							</div>
-
-            </form>
-          </div>
         </div>
+        <div>
+          <form role="form" action="" method="post">
 
-        <div class="column is-half">
+            <div class="field has-addons">
+              <div class="control is-expanded">
+                {{ form.movement(placeholder="Próxima jogada", class="input", type="text") }}
+              </div>
+              <div class="control">
+                <button class="button is-dark" type="submit">
+                  Mover
+                </button>
+              </div>
+            </div>
+
+          </form>
         </div>
 
       </div>
+
+      <div class="column is-half"></div>
+
     </div>
-  </section>
+  </div>
+</section>
 
 {% endblock main %}
