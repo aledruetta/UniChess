@@ -1,39 +1,19 @@
-import chess
-import chess.svg
 from flask import Blueprint, render_template, request
 from wtforms import Form, StringField, validators
+
+from xadrez.ext.engine import (
+    create_board,
+    load_board,
+    move_piece,
+    render_board,
+    save_board,
+)
 
 bp = Blueprint("site", __name__)
 
 
 class MoveForm(Form):
     movement = StringField("movement", [validators.Length(min=2, max=4)])
-
-
-def save_board(board, mode="a"):
-    with open("jogo.txt", mode) as fd:
-        fd.write(board.fen() + "\n")
-
-
-def create_board():
-    board = chess.Board()
-    save_board(board, "w")
-
-    return board
-
-
-def load_board():
-    try:
-        with open("jogo.txt") as fd:
-            lines = fd.readlines()
-            if len(lines) > 0:
-                return chess.Board(lines[-1])
-    except FileNotFoundError:
-        return create_board()
-
-
-def render_board(board):
-    return chess.svg.board(board=board)
 
 
 @bp.route("/")
@@ -51,7 +31,7 @@ def board():
     board = load_board()
 
     if request.method == "POST" and form.validate():
-        m = chess.Move.from_uci(form.movement.data)
+        m = move_piece(form.movement.data)
         board.push(m)
         save_board(board)
 
