@@ -4,8 +4,9 @@ import chess.svg
 
 class UniBoard(chess.Board):
     def __init__(self, board_id, fen=chess.STARTING_FEN):
-        self.id = board_id
         super().__init__(fen)
+        self.id = board_id
+        self.uni_load()
 
     def uni_save(self, uci=None, mode="a"):
         with open("jogo.txt", mode) as fd:

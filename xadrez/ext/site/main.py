@@ -21,7 +21,7 @@ class PlayForm(Form):
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
-    board = UniBoard(None)
+    board = UniBoard(board_id=None)
     form = PlayForm(request.form)
 
     if request.method == "POST":
@@ -39,7 +39,6 @@ def index():
 def board(board_id):
     form = MoveForm(request.form)
     board = UniBoard(board_id)
-    board.uni_load()
 
     if request.method == "POST" and form.validate():
         board.uni_move(form.movement.data)
