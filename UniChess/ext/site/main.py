@@ -3,7 +3,7 @@ from random import randint
 from flask import Blueprint, redirect, render_template, request, url_for
 from wtforms import Form, StringField, validators
 
-from xadrez.ext.engine import UniBoard
+from UniChess.ext.engine import UniBoard
 
 bp = Blueprint("site", __name__)
 
