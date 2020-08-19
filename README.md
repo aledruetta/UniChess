@@ -43,6 +43,12 @@
     make clean
 ```
 
+- Database
+
+```bash
+    make init_db
+```
+
 - Implementar logging
 
 ```python

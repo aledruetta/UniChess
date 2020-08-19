@@ -9,5 +9,5 @@ def drop_db():
     db.drop_all()
 
 
-def populate_deb():
-    pass
+# def populate_deb():
+#     pass

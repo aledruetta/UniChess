@@ -4,7 +4,7 @@ from unichess.ext.db import db
 class Board(db.Model):
     __tablename__ = "board"
     id = db.Column("id", db.Integer, primary_key=True)
-    random = db.Column("random", db.Integer)
+    random_id = db.Column("random_id", db.Integer)
 
     movements = db.relationship(
         "Movement", backref=db.backref("board", lazy=True)
@@ -18,7 +18,7 @@ class Movement(db.Model):
     __tablename__ = "movement"
     id = db.Column("id", db.Integer, primary_key=True)
     uci = db.Column("uci", db.Unicode, nullable=False)
-    color = db.Column("color", db.Unicode, nullable=False)
+    color = db.Column("color", db.Boolean, nullable=False)
 
     board_id = db.Column(
         db.Integer, db.ForeignKey("board.id"), nullable=False

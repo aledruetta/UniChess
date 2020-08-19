@@ -8,7 +8,7 @@ from unichess.ext.engine import UniBoard
 bp = Blueprint("site", __name__)
 
 MIN_ID = 1
-MAX_ID = 2 ** 64
+MAX_ID = 2 ** 63
 
 
 class MoveForm(Form):
@@ -21,31 +21,32 @@ class PlayForm(Form):
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
-    board = UniBoard(board_id=None)
     form = PlayForm(request.form)
 
     if request.method == "POST":
-        board.uni_save(mode="w")
-        board_id = randint(MIN_ID, MAX_ID)
+        random_id = randint(MIN_ID, MAX_ID)
+        uniboard = UniBoard(random_id)
+        uniboard.db_create_board()
 
-        return redirect(url_for("site.board", board_id=board_id))
+        return redirect(url_for("site.board", random_id=random_id))
 
     return render_template(
-        "index.html", title="UniChess", board=board.uni_render(), form=form,
+        "index.html", title="UniChess", board="", form=form,
     )
 
 
-@bp.route("/board/<int:board_id>", methods=["GET", "POST"])
-def board(board_id):
+@bp.route("/board/<int:random_id>", methods=["GET", "POST"])
+def board(random_id):
     form = MoveForm(request.form)
-    board = UniBoard(board_id)
+    uniboard = UniBoard()
+    uniboard.db_load_board(random_id)
 
     if request.method == "POST" and form.validate():
-        board.uni_move(form.movement.data)
+        uniboard.uni_move(form.movement.data)
 
     return render_template(
         "board.html",
         title="UniChess Board",
-        board=board.uni_render(),
+        board=uniboard.uni_render(),
         form=form,
     )
