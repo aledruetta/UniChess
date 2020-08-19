@@ -6,7 +6,7 @@ def read(filename):
 
 
 setup(
-    name="UniChess",
+    name="unichess",
     version="0.1.0",
     description="Online Chess Game",
     packages=find_packages(),

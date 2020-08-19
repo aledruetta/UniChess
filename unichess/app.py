@@ -2,7 +2,7 @@
 
 from flask import Flask
 
-from UniChess.ext import config, db, site, toolbar
+from unichess.ext import config, db, site, toolbar
 
 
 def create_app():

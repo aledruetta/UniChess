@@ -7,6 +7,12 @@
     source .venv/bin/activate
 ```
 
+- SQLite3
+
+```bash
+    sudo apt install sqlite3
+```
+
 - Instalar
 
 ```bash
