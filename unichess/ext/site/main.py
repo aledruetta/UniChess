@@ -42,7 +42,9 @@ def board(random_id):
     uniboard.db_load_board(random_id)
 
     if request.method == "POST" and form.validate():
-        uniboard.uni_move(form.movement.data)
+        uci = form.movement.data
+        uniboard.uni_move(uci)
+        uniboard.db_save_movement(uci)
 
     return render_template(
         "board.html",
