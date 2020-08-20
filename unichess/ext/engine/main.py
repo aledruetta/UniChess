@@ -1,8 +1,8 @@
 import chess
 import chess.svg
 
-from unichess.ext.db.models import Board, Movement
 from unichess.ext.db import db
+from unichess.ext.db.models import Board, Movement
 
 
 class UniBoard(chess.Board):
@@ -22,14 +22,16 @@ class UniBoard(chess.Board):
     def db_load_board(self, random_id):
         db_board = Board.query.filter_by(random_id=random_id).first()
         self.db_board_id = db_board.id
-        db_movements = (
-            Movement.query.filter_by(board_id=self.db_board_id).all())
+        db_movements = Movement.query.filter_by(
+            board_id=self.db_board_id
+        ).all()
         for movement in db_movements:
             self.uni_move(movement.uci)
 
     def db_save_movement(self, uci):
         movement = Movement(
-            uci=uci, color=self.turn, board_id=self.db_board_id)
+            uci=uci, color=self.turn, board_id=self.db_board_id
+        )
         db.session.add(movement)
         db.session.commit()
 

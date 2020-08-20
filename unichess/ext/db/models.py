@@ -11,7 +11,7 @@ class Board(db.Model):
     )
 
     def __repr__(self):
-        return '<Board %r>' % self.movements
+        return "<Board %r>" % self.movements
 
 
 class Movement(db.Model):
@@ -20,9 +20,7 @@ class Movement(db.Model):
     uci = db.Column("uci", db.Unicode, nullable=False)
     color = db.Column("color", db.Boolean, nullable=False)
 
-    board_id = db.Column(
-        db.Integer, db.ForeignKey("board.id"), nullable=False
-    )
+    board_id = db.Column(db.Integer, db.ForeignKey("board.id"), nullable=False)
 
     def __repr__(self):
-        return '<Movement %r>' % self.uci
+        return "<Movement %r>" % self.uci
