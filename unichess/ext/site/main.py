@@ -22,6 +22,15 @@ class LoginForm(Form):
     password = PasswordField("password", [validators.DataRequired()])
 
 
+class SignupForm(Form):
+    username = StringField("username")
+    email = StringField("email", [
+        validators.length(min=6, max=35),
+        validators.DataRequired()
+    ])
+    password = PasswordField("password", [validators.DataRequired()])
+
+
 @bp.route("/", methods=["GET", "POST"])
 def index():
     form = PlayForm(request.form)
@@ -55,9 +64,15 @@ def board(random_id):
     )
 
 
-@bp.route("/signup", methods=["POST"])
+@bp.route("/signup", methods=["GET", "POST"])
 def signup():
-    pass
+    form = SignupForm(request.form)
+
+    return render_template(
+        "signup.html",
+        title="SignUp",
+        form=form,
+    )
 
 
 @bp.route("/login", methods=["GET", "POST"])
