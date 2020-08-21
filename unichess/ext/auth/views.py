@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 from wtforms import Form, PasswordField, StringField, validators
+from .control import create_user
 
 bp = Blueprint("auth", __name__)
 
@@ -8,7 +9,7 @@ class LoginForm(Form):
     email = StringField(
         "email", [validators.length(min=6, max=35), validators.DataRequired()]
     )
-    password = PasswordField("password", [validators.DataRequired()])
+    passwd = PasswordField("passwd", [validators.DataRequired()])
 
 
 class SignupForm(Form):
@@ -16,14 +17,24 @@ class SignupForm(Form):
     email = StringField(
         "email", [validators.length(min=6, max=35), validators.DataRequired()]
     )
-    password = PasswordField("password", [validators.DataRequired()])
+    passwd = PasswordField("passwd", [validators.DataRequired()])
 
 
 @bp.route("/signup", methods=["GET", "POST"])
 def signup():
     form = SignupForm(request.form)
 
-    return render_template("signup.html", title="SignUp", form=form,)
+    # if request.method == "POST" and form.validate():
+    if request.method == "POST":
+        create_user(
+            form.username.data,
+            form.email.data,
+            form.passwd.data
+        )
+
+        return redirect(url_for("site.index"))
+
+    return render_template("signup.html", title="Sign up", form=form,)
 
 
 @bp.route("/login", methods=["GET", "POST"])

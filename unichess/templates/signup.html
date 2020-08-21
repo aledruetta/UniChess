@@ -13,12 +13,12 @@
     </p>
 
     <div class="login-panel-form">
-      <form>
+      <form role="form" action="" method="post">
 
         <div class="field">
           <label class="label">Username</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input is-success is-medium" type="text" placeholder="Text input" value="UniChess">
+            {{ form.username(placeholder="Text input", class="input is-medium", type="text", value="unichess") }}
             <span class="icon is-small is-left">
               <i class="fas fa-user"></i>
             </span>
@@ -32,7 +32,7 @@
         <div class="field">
           <label class="label">Email</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input is-danger is-medium" type="email" placeholder="Email input" value="hello@">
+            {{ form.email(placeholder="Email input", class="input is-medium", type="text", value="unichess@") }}
             <span class="icon is-small is-left">
               <i class="fas fa-envelope"></i>
             </span>
@@ -45,7 +45,7 @@
 
         <div class="field">
           <p class="control has-icons-left">
-            <input class="input is-medium" type="password" placeholder="Password">
+            {{ form.passwd(placeholder="Password", class="input is-medium", type="password") }}
             <span class="icon is-small is-left">
               <i class="fas fa-lock"></i>
             </span>
@@ -54,8 +54,8 @@
 
         <div class="field">
           <p class="control">
-            <button class="button is-primary is-medium">
-              Login
+            <button class="button is-primary is-medium" type="submit">
+              Sign up
             </button>
           </p>
         </div>
