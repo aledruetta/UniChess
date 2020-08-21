@@ -1,4 +1,4 @@
-from delivery.ext.db import db
+from unichess.ext.db import db
 
 
 class User(db.Model):
