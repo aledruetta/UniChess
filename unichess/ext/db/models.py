@@ -6,6 +6,9 @@ class Board(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     random_id = db.Column("random_id", db.Integer)
 
+    host_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    guest_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
     movements = db.relationship(
         "Movement", backref=db.backref("board", lazy=True)
     )

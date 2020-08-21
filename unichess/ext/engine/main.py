@@ -26,7 +26,8 @@ class UniBoard(chess.Board):
     def create_board(self):
         self.random_id = randint(MIN_ID, MAX_ID)
 
-        db_board = Board(random_id=self.random_id)
+        # TODO: Trocar host_id hardcoded por usuário logado
+        db_board = Board(random_id=self.random_id, host_id=1)
         db.session.add(db_board)
         db.session.commit()
 
