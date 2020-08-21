@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 from wtforms import Form, PasswordField, StringField, validators
-from .control import create_user
+from .control import create_user, validate_user
 
 bp = Blueprint("auth", __name__)
 
@@ -24,8 +24,7 @@ class SignupForm(Form):
 def signup():
     form = SignupForm(request.form)
 
-    # if request.method == "POST" and form.validate():
-    if request.method == "POST":
+    if request.method == "POST" and form.validate():
         create_user(
             form.username.data,
             form.email.data,
@@ -33,7 +32,6 @@ def signup():
         )
 
         return redirect(url_for("site.index"))
-
     return render_template("signup.html", title="Sign up", form=form,)
 
 
@@ -41,4 +39,8 @@ def signup():
 def login():
     form = LoginForm(request.form)
 
+    if request.method == "POST" and form.validate():
+        user = validate_user(form.email.data, form.passwd.data)
+        if user:
+            return redirect(url_for("site.index"))
     return render_template("login.html", title="Login", form=form,)

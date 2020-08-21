@@ -11,3 +11,9 @@ def create_user(username, email, passwd, is_admin=False):
     )
     db.session.add(user)
     db.session.commit()
+
+
+def validate_user(email, passwd):
+    user = User.query.filter_by(email=email).first()
+    if user and user.passwd == passwd:
+        return user
