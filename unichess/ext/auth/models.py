@@ -1,4 +1,4 @@
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 
 from unichess.ext.db import db
 
@@ -10,7 +10,7 @@ class User(db.Model):
     username = db.Column("username", db.Unicode, unique=True, nullable=False)
     email = db.Column("email", db.Unicode, unique=True, nullable=False)
     passwd = db.Column("passwd", db.Unicode)
-    is_admin = db.Column("is_admin", db.Boolean)
+    is_admin = db.Column("is_admin", db.Boolean, default=False)
     authenticated = db.Column(db.Boolean, default=False)
 
     hosts = db.relationship(
@@ -18,9 +18,6 @@ class User(db.Model):
         foreign_keys="Board.host_id",
         backref=db.backref("user", lazy=True),
     )
-
-    def set_passwd(self, passwd):
-        self.passwd = generate_password_hash(passwd)
 
     def check_passwd(self, passwd):
         return check_password_hash(self.passwd, passwd)

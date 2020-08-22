@@ -40,8 +40,8 @@ def login():
     form = LoginForm(request.form)
 
     if request.method == "POST" and form.validate():
-        user = validate_user(form.email.data, form.passwd.data)
-        if user:
+        is_user = validate_user(form.email.data, form.passwd.data)
+        if is_user:
             return redirect(url_for("site.index"))
     return render_template("login.html", title="Login", form=form,)
 
