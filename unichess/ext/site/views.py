@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import login_required
 from wtforms import Form, StringField, validators
 
 from unichess.ext.engine import UniBoard
@@ -31,6 +32,7 @@ def index():
 
 
 @bp.route("/board/<int:random_id>", methods=["GET", "POST"])
+@login_required
 def board(random_id):
     form = MoveForm(request.form)
     uniboard = UniBoard(random_id)
