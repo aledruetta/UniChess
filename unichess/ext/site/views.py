@@ -1,7 +1,8 @@
 from flask import Blueprint, redirect, render_template, request, url_for
-from flask_login import login_required
+from flask_login import current_user, login_required
 from wtforms import Form, StringField, validators
 
+from unichess.ext.auth.views import SignupForm
 from unichess.ext.engine import UniBoard
 
 bp = Blueprint("site", __name__)
@@ -19,9 +20,15 @@ class PlayForm(Form):
 def index():
     form = PlayForm(request.form)
 
-    if request.method == "POST":
-        uniboard = UniBoard()
-        return redirect(url_for("site.board", random_id=uniboard.random_id))
+    if request.method == "POST" and form.validate():
+        if current_user and current_user.is_authenticated:
+            uniboard = UniBoard()
+            return redirect(
+                url_for("site.board", random_id=uniboard.random_id)
+            )
+
+        form = SignupForm(request.form)
+        return render_template("signup.html", title="Sign up", form=form,)
 
     return render_template(
         "index.html",

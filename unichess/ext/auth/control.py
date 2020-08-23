@@ -1,5 +1,4 @@
 from flask_login import LoginManager, login_user
-from werkzeug.security import generate_password_hash
 
 from unichess.ext.auth.models import User
 from unichess.ext.db import db
@@ -7,18 +6,18 @@ from unichess.ext.db import db
 login_manager = LoginManager()
 
 
-def create_user(username, email, passwd, is_admin=False):
-    hash_passwd = generate_password_hash(passwd)
+def create_user(username, email, password, is_admin=False):
     user = User(
-        username=username, email=email, passwd=hash_passwd, is_admin=is_admin
+        username=username, email=email, password=None, is_admin=is_admin
     )
+    user.set_password(password)
     db.session.add(user)
     db.session.commit()
 
 
-def validate_user(email, passwd):
+def validate_user(email, password):
     user = User.query.filter_by(email=email).first()
-    if user and user.check_passwd(passwd):
+    if user and user.check_password(password):
         user.authenticated = True
         db.session.add(user)
         db.session.commit()

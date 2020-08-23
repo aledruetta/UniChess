@@ -2,6 +2,7 @@ from random import randint
 
 import chess
 import chess.svg
+from flask_login import login_required
 
 from unichess.ext.db import db
 from unichess.ext.db.models import Board, Movement
@@ -23,6 +24,7 @@ class UniBoard(chess.Board):
         else:
             self.load_board()
 
+    @login_required
     def create_board(self):
         self.random_id = randint(MIN_ID, MAX_ID)
 
@@ -33,6 +35,7 @@ class UniBoard(chess.Board):
 
         self.db_board_id = db_board.id
 
+    @login_required
     def load_board(self):
         db_board = Board.query.filter_by(random_id=self.random_id).first()
         self.db_board_id = db_board.id
@@ -43,6 +46,7 @@ class UniBoard(chess.Board):
             movement = chess.Move.from_uci(movement.uci)
             self.push(movement)
 
+    @login_required
     def save_movement(self, uci):
         movement = Movement(
             uci=uci, color=self.turn, board_id=self.db_board_id
@@ -50,6 +54,7 @@ class UniBoard(chess.Board):
         db.session.add(movement)
         db.session.commit()
 
+    @login_required
     def move(self, uci):
         movement = chess.Move.from_uci(uci)
         if movement in self.legal_moves:
@@ -60,5 +65,6 @@ class UniBoard(chess.Board):
     def render_base():
         return chess.svg.board(chess.BaseBoard())
 
+    @login_required
     def render(self):
         return chess.svg.board(board=self)
