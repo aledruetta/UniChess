@@ -2,7 +2,7 @@
 
 from flask import Flask
 
-from unichess.ext import auth, cli, config, db, site, toolbar
+from unichess.ext import auth, cli, config, db, engine, site, toolbar
 
 
 def create_app():
@@ -12,6 +12,7 @@ def create_app():
     toolbar.init_app(app)
     cli.init_app(app)
     auth.init_app(app)
+    engine.init_app(app)
     site.init_app(app)
 
     return app

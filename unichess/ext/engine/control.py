@@ -1,11 +1,11 @@
 from random import randint
 
+from unichess.ext.db import db
+from .models import Board, Movement
+
 import chess
 import chess.svg
 from flask_login import login_required
-
-from unichess.ext.db import db
-from unichess.ext.db.models import Board, Movement
 
 MIN_ID = 1
 MAX_ID = 2 ** 63

@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from wtforms import Form, StringField, validators
 
 from unichess.ext.auth.views import SignupForm
-from unichess.ext.engine import UniBoard
+from unichess.ext.engine.control import UniBoard
 
 bp = Blueprint("site", __name__)
 

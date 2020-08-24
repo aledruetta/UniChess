@@ -18,45 +18,42 @@ class LoginForm(FlaskForm):
         validators=[
             Length(min=6),
             Email(message="Enter a valid email."),
-            DataRequired()
-        ]
+            DataRequired(),
+        ],
     )
     password = PasswordField(
         "password",
         validators=[
             DataRequired(),
-            Length(min=6, message="Select a stronger password.")
-        ]
+            Length(min=6, message="Select a stronger password."),
+        ],
     )
     submit = SubmitField("Log In")
 
 
 class SignupForm(FlaskForm):
-    username = StringField(
-        "username",
-        [DataRequired()]
-    )
+    username = StringField("username", [DataRequired()])
     email = EmailField(
         "email",
         validators=[
             Length(min=6),
             Email(message="Enter a valid email."),
-            DataRequired()
-        ]
+            DataRequired(),
+        ],
     )
     password = PasswordField(
         "password",
         validators=[
             DataRequired(),
-            Length(min=6, message="Select a stronger password.")
-        ]
+            Length(min=6, message="Select a stronger password."),
+        ],
     )
     confirm = PasswordField(
         "Confirm Your Password",
         validators=[
             DataRequired(),
-            EqualTo("password", message="Password must much.")
-        ]
+            EqualTo("password", message="Password must much."),
+        ],
     )
     submit = SubmitField("Register")
 
