@@ -7,6 +7,7 @@ from unichess.ext import auth, cli, config, db, engine, site, toolbar
 
 def create_app():
     app = Flask(__name__)
+
     config.init_app(app)
     db.init_app(app)
     toolbar.init_app(app)

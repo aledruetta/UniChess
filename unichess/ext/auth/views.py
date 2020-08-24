@@ -60,7 +60,16 @@ class SignupForm(FlaskForm):
 
 @bp.route("/signup", methods=["GET", "POST"])
 def signup():
-    form = SignupForm(request.form)
+    form = SignupForm()
+
+    print(request.method)
+    if form.validate():
+        print("Validate!")
+    if form.is_submitted:
+        print("Is submitted!")
+    if form.validate_on_submit():
+        print("Validate on submit!")
+    print(form.errors)
 
     if request.method == "POST" and form.validate_on_submit():
         create_user(form.username.data, form.email.data, form.password.data)
@@ -71,7 +80,7 @@ def signup():
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
-    form = LoginForm(request.form)
+    form = LoginForm()
 
     if request.method == "POST" and form.validate_on_submit():
         is_user = validate_user(form.email.data, form.password.data)

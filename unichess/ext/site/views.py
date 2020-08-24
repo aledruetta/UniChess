@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, url_for
-from flask_login import current_user, login_required
-from wtforms import Form, StringField, validators
+from flask_login import current_user
+from flask_wtf import FlaskForm
+from wtforms import StringField
 
 from unichess.ext.auth.views import SignupForm
 from unichess.ext.engine.control import UniBoard
@@ -8,23 +9,19 @@ from unichess.ext.engine.control import UniBoard
 bp = Blueprint("site", __name__)
 
 
-class MoveForm(Form):
-    movement = StringField("movement", [validators.Length(min=4, max=4)])
-
-
-class PlayForm(Form):
+class PlayForm(FlaskForm):
     play = StringField("play")
 
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
-    form = PlayForm(request.form)
+    form = PlayForm()
 
-    if request.method == "POST" and form.validate():
+    if request.method == "POST" and form.validate_on_submit():
         if current_user and current_user.is_authenticated:
             uniboard = UniBoard()
             return redirect(
-                url_for("site.board", random_id=uniboard.random_id)
+                url_for("engine.board", random_id=uniboard.random_id)
             )
 
         form = SignupForm(request.form)
@@ -34,23 +31,5 @@ def index():
         "index.html",
         title="UniChess",
         board=UniBoard.render_base(),
-        form=form,
-    )
-
-
-@bp.route("/board/<int:random_id>", methods=["GET", "POST"])
-@login_required
-def board(random_id):
-    form = MoveForm(request.form)
-    uniboard = UniBoard(random_id)
-
-    if request.method == "POST" and form.validate():
-        uci = form.movement.data
-        uniboard.move(uci)
-
-    return render_template(
-        "board.html",
-        title="UniChess Board",
-        board=uniboard.render(),
         form=form,
     )
