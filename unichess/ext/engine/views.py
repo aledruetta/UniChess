@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from flask_login import login_required
+from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import StringField, validators
 
@@ -18,6 +18,13 @@ def board(random_id):
     form = MoveForm()
     uniboard = UniBoard(random_id)
 
+    auth = {
+        "is_auth": current_user.is_authenticated,
+        "username": current_user.username
+        if current_user.is_authenticated
+        else None,
+    }
+
     if request.method == "POST" and form.validate_on_submit():
         uci = form.movement.data
         uniboard.move(uci)
@@ -27,4 +34,5 @@ def board(random_id):
         title="UniChess Board",
         board=uniboard.render(),
         form=form,
+        auth=auth,
     )

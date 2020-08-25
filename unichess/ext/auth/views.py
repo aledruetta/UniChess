@@ -1,5 +1,4 @@
 from flask import Blueprint, redirect, render_template, request, url_for
-
 from flask_login import login_required, logout_user
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField
@@ -7,7 +6,6 @@ from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 from .control import create_user, validate_user
-
 
 bp = Blueprint("auth", __name__)
 
@@ -75,7 +73,9 @@ def signup():
         create_user(form.username.data, form.email.data, form.password.data)
 
         return redirect(url_for("site.index"))
-    return render_template("signup.html", title="Sign up", form=form,)
+    return render_template(
+        "signup.html", title="Sign up", form=form, auth=None
+    )
 
 
 @bp.route("/login", methods=["GET", "POST"])
@@ -86,16 +86,12 @@ def login():
         is_user = validate_user(form.email.data, form.password.data)
         if is_user:
             return redirect(url_for("site.index"))
-    return render_template("login.html", title="Login", form=form,)
+    return render_template("login.html", title="Login", form=form, auth=None)
 
 
 @bp.route("/logout")
 @login_required
 def logout():
-    # user = current_user
-    # user.authenticated = False
-    # db.session.add(user)
-    # db.session.commit()
     logout_user()
 
     return redirect(url_for("site.index"))

@@ -4,15 +4,40 @@
       <img src="{{ url_for('static', filename='img/logo.png') }}" width="112" height="28">
     </a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarUniChess">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu">
+  <div id="navbarUniChess" class="navbar-menu">
     <div class="navbar-end">
+
+      {% if auth.is_auth %}
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          <strong>{{ "@" + auth.username }}</strong>
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item">
+            About
+          </a>
+          <a class="navbar-item">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="{{ url_for('auth.logout') }}">
+            Logout
+          </a>
+        </div>
+
+      </div>
+
+      {% else %}
+
       <div class="navbar-item">
         <div class="buttons">
           <a class="button is-primary" href="{{ url_for('auth.signup') }}">
@@ -23,6 +48,9 @@
           </a>
         </div>
       </div>
+
+      {% endif %}
+
     </div>
   </div>
 </nav>

@@ -17,6 +17,13 @@ class PlayForm(FlaskForm):
 def index():
     play_form = PlayForm()
 
+    auth = {
+        "is_auth": current_user.is_authenticated,
+        "username": current_user.username
+        if current_user.is_authenticated
+        else None,
+    }
+
     # Render on POST (form)
     if request.method == "POST" and play_form.validate_on_submit():
 
@@ -24,12 +31,14 @@ def index():
             uniboard = UniBoard()
 
             return redirect(
-                url_for("engine.board", random_id=uniboard.random_id)
+                url_for(
+                    "engine.board", random_id=uniboard.random_id, auth=auth
+                )
             )
 
         signup_form = SignupForm()
         return render_template(
-            "signup.html", title="Sign up", form=signup_form
+            "signup.html", title="Sign up", form=signup_form, auth=auth
         )
 
     # Index rendering on GET
@@ -38,4 +47,5 @@ def index():
         title="UniChess",
         board=UniBoard.render_base(),
         form=play_form,
+        auth=auth,
     )
