@@ -18,7 +18,7 @@ def board(random_id):
     form = MoveForm()
     uniboard = UniBoard(random_id)
 
-    if request.method == "POST" and form.validate():
+    if request.method == "POST" and form.validate_on_submit():
         uci = form.movement.data
         uniboard.move(uci)
 

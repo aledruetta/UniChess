@@ -15,21 +15,27 @@ class PlayForm(FlaskForm):
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
-    form = PlayForm()
+    play_form = PlayForm()
 
-    if request.method == "POST" and form.validate_on_submit():
-        if current_user and current_user.is_authenticated:
+    # Render on POST (form)
+    if request.method == "POST" and play_form.validate_on_submit():
+
+        if current_user.is_authenticated:
             uniboard = UniBoard()
+
             return redirect(
                 url_for("engine.board", random_id=uniboard.random_id)
             )
 
-        form = SignupForm(request.form)
-        return render_template("signup.html", title="Sign up", form=form,)
+        signup_form = SignupForm()
+        return render_template(
+            "signup.html", title="Sign up", form=signup_form
+        )
 
+    # Index rendering on GET
     return render_template(
         "index.html",
         title="UniChess",
         board=UniBoard.render_base(),
-        form=form,
+        form=play_form,
     )

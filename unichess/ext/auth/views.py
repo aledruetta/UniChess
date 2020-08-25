@@ -1,13 +1,13 @@
 from flask import Blueprint, redirect, render_template, request, url_for
-from flask_login import current_user, login_required, logout_user
+
+from flask_login import login_required, logout_user
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
-from unichess.ext.db import db
-
 from .control import create_user, validate_user
+
 
 bp = Blueprint("auth", __name__)
 
@@ -62,14 +62,14 @@ class SignupForm(FlaskForm):
 def signup():
     form = SignupForm()
 
-    print(request.method)
-    if form.validate():
-        print("Validate!")
-    if form.is_submitted:
-        print("Is submitted!")
-    if form.validate_on_submit():
-        print("Validate on submit!")
-    print(form.errors)
+    # print(request.method)
+    # if form.validate():
+    #     print("Validate!")
+    # if form.is_submitted:
+    #     print("Is submitted!")
+    # if form.validate_on_submit():
+    #     print("Validate on submit!")
+    # print(form.errors)
 
     if request.method == "POST" and form.validate_on_submit():
         create_user(form.username.data, form.email.data, form.password.data)
@@ -89,13 +89,13 @@ def login():
     return render_template("login.html", title="Login", form=form,)
 
 
-@bp.route("/logout", methods=["GET"])
+@bp.route("/logout")
 @login_required
 def logout():
-    user = current_user
-    user.authenticated = False
-    db.session.add(user)
-    db.session.commit()
+    # user = current_user
+    # user.authenticated = False
+    # db.session.add(user)
+    # db.session.commit()
     logout_user()
 
-    redirect(url_for("site.index"))
+    return redirect(url_for("site.index"))
