@@ -15,7 +15,8 @@
         </div>
 
         <div>
-          <form role="form" action="" method="post">
+          <form role="form" action="" method="POST">
+            {{ form.csrf_token }}
 
             <div class="field has-addons">
               <div class="control is-expanded">

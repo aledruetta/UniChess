@@ -20,9 +20,7 @@ def board(random_id):
 
     auth = {
         "is_auth": current_user.is_authenticated,
-        "username": current_user.username
-        if current_user.is_authenticated
-        else None,
+        "username": current_user.username,
     }
 
     if request.method == "POST" and form.validate_on_submit():
