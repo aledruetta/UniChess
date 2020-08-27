@@ -48,7 +48,7 @@
 - Database
 
 ```bash
-    make init_db
+    make initdb
 ```
 
 - Implementar logging
