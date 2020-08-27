@@ -10,8 +10,8 @@ def create_app():
 
     config.init_app(app)
     db.init_app(app)
-    toolbar.init_app(app)
     cli.init_app(app)
+    toolbar.init_app(app)
     auth.init_app(app)
     engine.init_app(app)
     site.init_app(app)

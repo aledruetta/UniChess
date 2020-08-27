@@ -1,15 +1,22 @@
+"""Flask extension for database managment commands"""
+
 import click
 
-from unichess.ext.db.commands import create_db, drop_db
+from unichess.ext.db import db
 
 
 def init_app(app):
 
-    app.cli.add_command(app.cli.command()(create_db))
-    app.cli.add_command(app.cli.command()(drop_db))
-    # app.cli.add_command(app.cli.command()(populate_db))
+    # TODO: usera biblioteca tabulate
 
     @app.cli.command()
-    def listar_pedidos():
-        # TODO: usar tabulate e listar pedidos
-        click.echo("lista de pedidos")
+    def createdb():
+        """Create a brand new database"""
+        db.create_all()
+        click.echo("Database created!")
+
+    @app.cli.command()
+    def dropdb():
+        """Drop all databases"""
+        db.drop_all()
+        click.echo("Database droped!")

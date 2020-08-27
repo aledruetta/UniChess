@@ -3,6 +3,7 @@
 <head>
 
   {% block head %}
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ title }}</title>
@@ -12,6 +13,7 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
   {% endblock head %}
 
   {% block extra_css %} {% endblock extra_css %}

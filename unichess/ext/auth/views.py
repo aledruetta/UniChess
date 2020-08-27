@@ -73,6 +73,7 @@ def signup():
         create_user(form.username.data, form.email.data, form.password.data)
 
         return redirect(url_for("site.index"))
+
     return render_template(
         "signup.html", title="Sign up", form=form, auth=None
     )
@@ -86,6 +87,7 @@ def login():
         is_user = validate_user(form.email.data, form.password.data)
         if is_user:
             return redirect(url_for("site.index"))
+
     return render_template("login.html", title="Login", form=form, auth=None)
 
 
