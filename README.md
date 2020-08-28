@@ -1,6 +1,6 @@
 # UniChess
 
-[<img src="art/youtube.png" width="50%">](https://www.youtube.com/watch?v=qvagXQ70dPo)
+[<img src="art/youtube.png" width="50%">](https://youtu.be/PvlhOd1It4U)
 
 - Criar ambiente virtual
 
