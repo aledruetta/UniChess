@@ -23,8 +23,8 @@ def validate_user(email, password):
         db.session.commit()
         login_user(user, remember=True)
 
-        return True
-    return False
+        return user
+    return None
 
 
 @login_manager.user_loader
