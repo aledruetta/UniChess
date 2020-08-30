@@ -97,8 +97,10 @@ def login():
     login_form = LoginForm()
 
     if request.method == "POST" and login_form.validate_on_submit():
-        user = validate_user(login_form.email.data, login_form.password.data)
-        if user:
+        if user := validate_user(
+            login_form.email.data, login_form.password.data
+        ):
+
             session["auth"] = {
                 "is_auth": user.is_authenticated,
                 "username": user.username,
@@ -115,7 +117,6 @@ def login():
 @login_required
 def logout():
     logout_user()
-
-    session["auth"] = {"is_auth": False, "username": None}
+    session["auth"] = None
 
     return redirect(url_for("site.index"))
