@@ -16,8 +16,8 @@ bp = Blueprint("site", __name__)
 
 
 class PlayForm(FlaskForm):
-    create_game = StringField("create")
-    join_game = StringField("join")
+    create_game = StringField("Create Game")
+    join_game = StringField("Join Game")
 
 
 @bp.route("/")
