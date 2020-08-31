@@ -5,8 +5,7 @@ import chess.svg
 from flask_login import current_user
 
 from unichess.ext.db import db
-
-from .models import Board, Movement
+from unichess.ext.engine import models
 
 MIN_ID = 1
 MAX_ID = 2 ** 63
@@ -28,16 +27,20 @@ class UniBoard(chess.Board):
     def create_board(self):
         self.random_id = randint(MIN_ID, MAX_ID)
 
-        db_board = Board(random_id=self.random_id, host_id=current_user.id)
+        db_board = models.Board(
+            random_id=self.random_id, host_id=current_user.id
+        )
         db.session.add(db_board)
         db.session.commit()
 
         self.db_board_id = db_board.id
 
     def load_board(self):
-        db_board = Board.query.filter_by(random_id=self.random_id).first()
+        db_board = models.Board.query.filter_by(
+            random_id=self.random_id
+        ).first()
         self.db_board_id = db_board.id
-        db_movements = Movement.query.filter_by(
+        db_movements = models.Movement.query.filter_by(
             board_id=self.db_board_id
         ).all()
         for movement in db_movements:
@@ -45,16 +48,16 @@ class UniBoard(chess.Board):
             self.push(movement)
 
     def delete_boards(self):
-        Board.query.filter_by(random_id=self.random_id).delete()
+        models.Board.query.filter_by(random_id=self.random_id).delete()
         db.session.commit()
 
     def add_guest(self, guest_id):
-        db_board = Board.query.get(self.db_board_id)
+        db_board = models.Board.query.get(self.db_board_id)
         db_board.guest_id = guest_id
         db.session.commit()
 
     def save_movement(self, uci):
-        movement = Movement(
+        movement = models.Movement(
             uci=uci, color=self.turn, board_id=self.db_board_id
         )
         db.session.add(movement)
