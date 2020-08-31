@@ -10,7 +10,7 @@ from flask_login import login_required, logout_user
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.validators import Email, EqualTo, InputRequired, Length
 
 from . import models
 
@@ -23,13 +23,13 @@ class LoginForm(FlaskForm):
         validators=[
             Length(min=6),
             Email(message="Enter a valid email."),
-            DataRequired(),
+            InputRequired(),
         ],
     )
     password = PasswordField(
         "password",
         validators=[
-            DataRequired(),
+            InputRequired(),
             Length(min=6, message="Select a stronger password."),
         ],
     )
@@ -37,26 +37,26 @@ class LoginForm(FlaskForm):
 
 
 class SignupForm(FlaskForm):
-    username = StringField("username", [DataRequired()])
+    username = StringField("username", [InputRequired()])
     email = EmailField(
         "email",
         validators=[
             Length(min=6),
             Email(message="Enter a valid email."),
-            DataRequired(),
+            InputRequired(),
         ],
     )
     password = PasswordField(
         "password",
         validators=[
-            DataRequired(),
+            InputRequired(),
             Length(min=6, message="Select a stronger password."),
         ],
     )
     confirm = PasswordField(
         "Confirm Your Password",
         validators=[
-            DataRequired(),
+            InputRequired(),
             EqualTo("password", message="Password must much."),
         ],
     )

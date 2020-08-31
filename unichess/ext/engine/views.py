@@ -9,7 +9,7 @@ from flask import (
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from wtforms.validators import Length
+from wtforms.validators import InputRequired, Length
 
 from .control import UniBoard
 
@@ -17,7 +17,9 @@ bp = Blueprint("engine", __name__)
 
 
 class MoveForm(FlaskForm):
-    movement = StringField("Movement", validators=[Length(min=4, max=4)])
+    movement = StringField(
+        "Movement", validators=[InputRequired(), Length(min=4, max=4)]
+    )
 
 
 class ModalForm(FlaskForm):
