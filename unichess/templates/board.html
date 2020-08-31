@@ -41,6 +41,9 @@
 </section>
 
 {% if modal %}
+  <form role="form" action="" method="POST">
+  {{ modal_form.csrf_token }}
+
   <div class="modal is-active">
     <div class="modal-background"></div>
       <div class="modal-card">
@@ -48,29 +51,39 @@
           <p class="modal-card-title">Iniciar uma partida</p>
         </header>
         <section class="modal-card-body">
-          <p>Copie o código e envie para o seu opoente: <strong>{{ board.id}}</strong>.</p><br />
+          {% if board.id %}
+          <p>
+            Copie o código e envie para o seu opoente: <strong>{{ board.id}}</strong>.
+          </p>
+          <br />
           <p>
             <strong>Importante:</strong> Você apenas poderá criar uma partida por vez.
             Para criar uma outra partida, antes devera concluir a atual. As partidas
             duram até no máximo 30 minutos.
           </p>
+          {% else %}
+          <p>
+            Cole o código enviado pelo seu opoente:
+            {{ modal_form.random_id(placeholder="Código", class="input is-medium", type="text") }}
+          </p>
+          {% endif %}
         </section>
         <footer class="modal-card-foot">
-          <form role="form" action="" method="GET">
 
 						<div class="field is-grouped">
 							<div class="control">
-								{{ modal_form.start(class="button is-link is-success", type="submit", value="Pronto!")}}
+								{{ modal_form.submit(class="button is-link is-success", type="submit", value="Pronto!")}}
 							</div>
 							<div class="control">
 								{{ modal_form.cancel(class="button is-link is-success is-light", type="submit", value="Cancelar")}}
 							</div>
 						</div>
 
-          </form>
         </footer>
       </div>
   </div>
+
+  </form>
 {% endif %}
 
 {% endblock main %}

@@ -22,6 +22,7 @@ class PlayForm(FlaskForm):
 
 @bp.route("/")
 def index():
+    session["modal"] = True
     play_form = PlayForm()
 
     if request.args.get("create_game"):
@@ -36,7 +37,7 @@ def index():
 
     if request.args.get("join_game"):
         if current_user.is_authenticated:
-            pass
+            return redirect(url_for("engine.join"))
 
         return redirect(url_for("auth.signup"))
 

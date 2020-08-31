@@ -44,6 +44,15 @@ class UniBoard(chess.Board):
             movement = chess.Move.from_uci(movement.uci)
             self.push(movement)
 
+    def delete_boards(self):
+        Board.query.filter_by(random_id=self.random_id).delete()
+        db.session.commit()
+
+    def add_guest(self, guest_id):
+        db_board = Board.query.get(self.db_board_id)
+        db_board.guest_id = guest_id
+        db.session.commit()
+
     def save_movement(self, uci):
         movement = Movement(
             uci=uci, color=self.turn, board_id=self.db_board_id
