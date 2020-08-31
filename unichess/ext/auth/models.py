@@ -1,4 +1,4 @@
-from flask_login import UserMixin
+from flask_login import UserMixin, login_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from unichess.ext.db import db
@@ -25,6 +25,27 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    @classmethod
+    def create(cls, username, email, password, is_admin=False):
+        user = cls(
+            username=username, email=email, password=None, is_admin=is_admin
+        )
+        user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+
+    @classmethod
+    def validate(cls, email, password):
+        user = cls.query.filter_by(email=email).first()
+        if user.check_password(password):
+            user.authenticated = True
+            db.session.add(user)
+            db.session.commit()
+            login_user(user, remember=True)
+
+            return user
+        return None
 
     # def is_active(self):
     #     return True

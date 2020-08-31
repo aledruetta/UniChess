@@ -70,7 +70,7 @@ def board(random_id=None):
 
         if modal_form.validate_on_submit():
             if modal_form.cancel.data:
-                uniboard.delete_boards()
+                uniboard.delete()
 
                 return redirect(url_for("site.index"))
 

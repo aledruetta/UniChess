@@ -20,11 +20,11 @@ class UniBoard(chess.Board):
         self.turn = chess.WHITE
 
         if not random_id:
-            self.create_board()
+            self.create()
         else:
-            self.load_board()
+            self.load()
 
-    def create_board(self):
+    def create(self):
         self.random_id = randint(MIN_ID, MAX_ID)
 
         db_board = models.Board(
@@ -35,7 +35,7 @@ class UniBoard(chess.Board):
 
         self.db_board_id = db_board.id
 
-    def load_board(self):
+    def load(self):
         db_board = models.Board.query.filter_by(
             random_id=self.random_id
         ).first()
@@ -47,7 +47,7 @@ class UniBoard(chess.Board):
             movement = chess.Move.from_uci(movement.uci)
             self.push(movement)
 
-    def delete_boards(self):
+    def delete(self):
         models.Board.query.filter_by(random_id=self.random_id).delete()
         db.session.commit()
 
@@ -56,7 +56,7 @@ class UniBoard(chess.Board):
         db_board.guest_id = guest_id
         db.session.commit()
 
-    def save_movement(self, uci):
+    def save(self, uci):
         movement = models.Movement(
             uci=uci, color=self.turn, board_id=self.db_board_id
         )
@@ -67,7 +67,7 @@ class UniBoard(chess.Board):
         movement = chess.Move.from_uci(uci)
         if movement in self.legal_moves:
             self.push(movement)
-            self.save_movement(uci)
+            self.save(uci)
 
     @staticmethod
     def render_base():

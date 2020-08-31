@@ -12,7 +12,7 @@ from wtforms import PasswordField, StringField, SubmitField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
-from .control import create_user, validate_user
+from . import models
 
 bp = Blueprint("auth", __name__)
 
@@ -79,7 +79,7 @@ def signup():
         #     print("Validate on submit!")
         # print(form.errors)
 
-        create_user(
+        models.User.create(
             signup_form.username.data,
             signup_form.email.data,
             signup_form.password.data,
@@ -97,7 +97,7 @@ def login():
     login_form = LoginForm()
 
     if request.method == "POST" and login_form.validate_on_submit():
-        if user := validate_user(
+        if user := models.User.validate(
             login_form.email.data, login_form.password.data
         ):
 
