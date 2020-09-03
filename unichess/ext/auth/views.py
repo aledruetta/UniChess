@@ -12,7 +12,7 @@ from wtforms import PasswordField, StringField, SubmitField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import Email, EqualTo, InputRequired, Length
 
-from unichess.ext.models import User
+from unichess.ext.db.auth_models import User
 
 bp = Blueprint("auth", __name__)
 
