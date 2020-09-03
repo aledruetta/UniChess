@@ -1,3 +1,4 @@
+from .control import UniBoard
 from .views import bp
 
 

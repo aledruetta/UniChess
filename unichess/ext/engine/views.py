@@ -77,7 +77,6 @@ def board(random_id=None):
                 return redirect(url_for("site.index"))
 
         if move_form.validate_on_submit():
-            print("Move")
             uci = move_form.movement.data
             uniboard.move(uci)
 

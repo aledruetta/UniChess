@@ -10,7 +10,7 @@ from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField
 
-from unichess.ext.engine.control import UniBoard
+from unichess.ext.engine import UniBoard
 
 bp = Blueprint("site", __name__)
 

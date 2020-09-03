@@ -1,7 +1,7 @@
 import click
 
-from unichess.ext.auth import models
 from unichess.ext.db import db
+from unichess.ext.models import User
 
 # TODO: usar biblioteca tabulate para apresentação de dados
 
@@ -31,8 +31,6 @@ def dropdb():
 def createadmin(email, passwd):
     """Create admin user"""
 
-    models.User.create(
-        username="admin", email=email, password=passwd, is_admin=True
-    )
+    User.create(username="admin", email=email, password=passwd, is_admin=True)
 
     click.echo("User admin created...")
