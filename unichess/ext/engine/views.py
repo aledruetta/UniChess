@@ -43,7 +43,8 @@ def join():
                 return redirect(url_for("site.index"))
 
             elif random_id := modal_form.random_id.data:
-                UniBoard(random_id).add_guest(current_user.id)
+                uniboard = UniBoard()
+                uniboard.load(random_id).add_guest(current_user.id)
 
                 return redirect(url_for("engine.board", random_id=random_id))
 
@@ -65,7 +66,8 @@ def board(random_id=None):
     move_form = MoveForm()
     modal_form = ModalForm()
 
-    uniboard = UniBoard(random_id)
+    uniboard = UniBoard()
+    uniboard.load(random_id)
 
     if request.method == "POST":
         session["modal"] = False

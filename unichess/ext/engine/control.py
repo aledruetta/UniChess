@@ -12,17 +12,12 @@ MAX_ID = 2 ** 63
 
 
 class UniBoard(chess.Board):
-    def __init__(self, random_id=None, fen=chess.STARTING_FEN):
+    def __init__(self, fen=chess.STARTING_FEN):
         super().__init__(fen)
 
         self.db_board_id = None
-        self.random_id = random_id
+        self.random_id = None
         self.turn = chess.WHITE
-
-        if not random_id:
-            self.create()
-        else:
-            self.load()
 
     def create(self):
         self.random_id = randint(MIN_ID, MAX_ID)
@@ -33,7 +28,8 @@ class UniBoard(chess.Board):
 
         self.db_board_id = db_board.id
 
-    def load(self):
+    def load(self, random_id):
+        self.random_id = random_id
         db_board = Board.query.filter_by(random_id=self.random_id).first()
         self.db_board_id = db_board.id
         db_movements = Movement.query.filter_by(
