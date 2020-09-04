@@ -1,6 +1,6 @@
 from flask_login import LoginManager
 
-from unichess.ext.db.auth_models import User
+from unichess.ext.db.models import User
 
 login_manager = LoginManager()
 

@@ -5,7 +5,7 @@ import chess.svg
 from flask_login import current_user
 
 from unichess.ext.db import db
-from unichess.ext.db.engine_models import Board, Movement
+from unichess.ext.db.models import Board, Movement
 
 MIN_ID = 1
 MAX_ID = 2 ** 63
