@@ -5,7 +5,8 @@ import chess.svg
 from flask_login import current_user
 
 from unichess.ext.db import db
-from unichess.ext.db.models import Board, Movement
+
+from .models import Board, Movement
 
 MIN_ID = 1
 MAX_ID = 2 ** 63
@@ -33,9 +34,7 @@ class UniBoard(chess.Board):
         db_board = Board.query.filter_by(random_id=self.random_id).first()
         self._id = db_board.id
 
-        db_movements = Movement.query.filter_by(
-            board_id=self._id
-        ).all()
+        db_movements = Movement.query.filter_by(board_id=self._id).all()
 
         for movement in db_movements:
             movement = chess.Move.from_uci(movement.uci)
@@ -51,9 +50,7 @@ class UniBoard(chess.Board):
         db.session.commit()
 
     def save(self, uci):
-        movement = Movement(
-            uci=uci, color=self.turn, board_id=self._id
-        )
+        movement = Movement(uci=uci, color=self.turn, board_id=self._id)
 
         db.session.add(movement)
         db.session.commit()

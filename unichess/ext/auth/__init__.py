@@ -1,4 +1,5 @@
 from .control import login_manager
+from .models import User
 from .views import bp
 
 

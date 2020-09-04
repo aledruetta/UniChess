@@ -1,8 +1,7 @@
 import click
 
+from unichess.ext.auth import User
 from unichess.ext.db import db
-
-from .models import User
 
 # TODO: usar biblioteca tabulate para apresentação de dados
 
