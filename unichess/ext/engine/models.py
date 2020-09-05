@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from unichess.ext.db import db
 
 
@@ -6,6 +8,9 @@ class Board(db.Model):
 
     id = db.Column("id", db.Integer, primary_key=True)
     random_id = db.Column("random_id", db.Integer)
+    created_at = db.Column(
+        "created_at", db.DateTime, default=datetime.now, nullable=False
+    )
 
     host_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     guest_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -24,6 +29,13 @@ class Movement(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     uci = db.Column("uci", db.Unicode, nullable=False)
     color = db.Column("color", db.Boolean, nullable=False)
+    created_at = db.Column(
+        "created_at",
+        db.DateTime,
+        default=datetime.now,
+        onupdate=datetime.now,
+        nullable=False,
+    )
 
     board_id = db.Column(db.Integer, db.ForeignKey("board.id"), nullable=False)
 
