@@ -13,6 +13,7 @@
 
 ```bash
     sudo apt install sqlite3
+    sudo apt install shellcheck
 ```
 
 - Instalar
@@ -30,7 +31,7 @@
 - Rodar linters
 
 ```bash
-    make format
+    make lint
 ```
 
 - Rodar testes

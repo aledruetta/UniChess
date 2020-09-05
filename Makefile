@@ -7,10 +7,11 @@ run: export FLASK_ENV=development
 run:
 	flask run
 
-format:
+lint:
 	isort .
 	black -l 79 -t py38 .
 	flake8 setup.py unichess
+	shellcheck scripts/*
 
 clean:
 	@find . -name '*.py[co]' -exec rm --force {} \;
