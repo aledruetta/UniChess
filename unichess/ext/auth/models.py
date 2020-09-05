@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask_login import UserMixin, login_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -12,7 +14,16 @@ class User(UserMixin, db.Model):
     email = db.Column("email", db.Unicode, unique=True, nullable=False)
     password = db.Column("password", db.Unicode)
     is_admin = db.Column("is_admin", db.Boolean, default=False)
-    authenticated = db.Column(db.Boolean, default=False)
+    created_at = db.Column(
+        "created_at", db.DateTime, default=datetime.now, nullable=False
+    )
+    updated_at = db.Column(
+        "updated_at",
+        db.DateTime,
+        default=datetime.now,
+        onupdate=datetime.now,
+        nullable=False,
+    )
 
     hosts = db.relationship(
         "Board",
@@ -32,14 +43,19 @@ class User(UserMixin, db.Model):
             username=username, email=email, password=None, is_admin=is_admin
         )
         user.set_password(password)
+
         db.session.add(user)
         db.session.commit()
 
     @classmethod
+    def get(cls, user_id):
+        return cls.query.get(user_id)
+
+    @classmethod
     def validate(cls, email, password):
         user = cls.query.filter_by(email=email).first()
+
         if user.check_password(password):
-            user.authenticated = True
             db.session.add(user)
             db.session.commit()
             login_user(user, remember=True)
@@ -47,17 +63,11 @@ class User(UserMixin, db.Model):
             return user
         return None
 
-    # def is_active(self):
-    #     return True
-
-    # def get_id(self):
-    #     return self.id
-
-    # def is_authenticated(self):
-    #     return self.authenticated
-
-    # def is_anonymous(self):
-    #     return False
+    # UserMixin methods:
+    # is_active(self)
+    # get_id(self)
+    # is_authenticated(self)
+    # is_anonymous(self)
 
     def __repr__(self):
         return "<User %r>" % self.email
