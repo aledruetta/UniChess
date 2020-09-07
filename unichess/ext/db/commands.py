@@ -30,4 +30,16 @@ def createadmin(email, passwd):
     """Create admin user"""
 
     User.create(username="admin", email=email, password=passwd, is_admin=True)
-    click.echo("User admin created...")
+    click.echo("User admin successfully created...")
+
+
+@click.option("--username", "-u", required=True)
+@click.option("--email", "-e", required=True)
+@click.option("--passwd", "-p", required=True)
+def createuser(username, email, passwd):
+    """Create normal user"""
+
+    user = User.create(
+        username=username, email=email, password=passwd, is_admin=False
+    )
+    click.echo(f"User user {user} successfully created...")

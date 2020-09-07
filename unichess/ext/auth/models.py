@@ -47,6 +47,8 @@ class User(UserMixin, db.Model):
         db.session.add(user)
         db.session.commit()
 
+        return user
+
     @classmethod
     def get(cls, user_id):
         return cls.query.get(user_id)
