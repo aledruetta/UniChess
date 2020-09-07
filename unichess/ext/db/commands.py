@@ -1,4 +1,5 @@
 import click
+from tabulate import tabulate
 
 from unichess.ext.auth import User
 from unichess.ext.db import db
@@ -42,13 +43,14 @@ def createuser(username, email, passwd):
     user = User.create(
         username=username, email=email, password=passwd, is_admin=False
     )
-    click.echo(f"User user {user} successfully created...")
+    click.echo(f"User <{user.username}, {user.email}> successfully created...")
 
 
 def listusers():
     """List users from database"""
 
     users = User.query.order_by(User.email).all()
-
-    for user in users:
-        print(user)
+    click.echo(tabulate([
+        [u.username, u.email, "admin" if u.is_admin else None]
+        for u in users
+    ]))

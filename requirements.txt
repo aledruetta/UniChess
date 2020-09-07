@@ -5,3 +5,4 @@ flask-restful
 flask-sqlalchemy
 flask-wtf
 python-chess
+tabulate
