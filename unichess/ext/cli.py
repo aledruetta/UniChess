@@ -1,5 +1,3 @@
-"""Flask extension for database managment commands"""
-
 from unichess.ext.db.commands import createadmin, createdb, dropdb
 
 

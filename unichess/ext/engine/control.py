@@ -30,17 +30,21 @@ class UniBoard(chess.Board):
         self._id = db_board.id
 
     def load(self, random_id):
-        self.random_id = random_id
-        db_board = Board.query.filter_by(random_id=self.random_id).first()
-        self._id = db_board.id
+        try:
+            db_board = Board.query.filter_by(random_id=random_id).first()
+            self._id = db_board.id
+        except AttributeError as err:
+            print(err)
+        else:
+            self.random_id = random_id
+            db_movements = Movement.query.filter_by(board_id=self._id).all()
 
-        db_movements = Movement.query.filter_by(board_id=self._id).all()
-
-        for movement in db_movements:
-            movement = chess.Move.from_uci(movement.uci)
-            self.push(movement)
+            for movement in db_movements:
+                movement = chess.Move.from_uci(movement.uci)
+                self.push(movement)
 
     def delete(self):
+        print(self.random_id)
         Board.query.filter_by(random_id=self.random_id).delete()
         db.session.commit()
 

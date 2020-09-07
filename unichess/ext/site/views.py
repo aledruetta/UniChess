@@ -27,12 +27,7 @@ def index():
 
     if request.args.get("create_game"):
         if current_user.is_authenticated:
-            uniboard = UniBoard()
-            uniboard.create()
-
-            return redirect(
-                url_for("engine.board", random_id=uniboard.random_id)
-            )
+            return redirect(url_for("engine.create"))
 
         return redirect(url_for("auth.signup"))
 

@@ -28,7 +28,44 @@ class ModalForm(FlaskForm):
     cancel = StringField("Cancel")
 
 
-@bp.route("/board", methods=["GET", "POST"])
+@bp.route("/board/create", methods=["GET", "POST"])
+@login_required
+def create():
+
+    move_form = MoveForm()
+    modal_form = ModalForm()
+
+    uniboard = UniBoard()
+
+    if request.method == "GET":
+        uniboard.create()
+        session["random_id"] = uniboard.random_id
+
+    elif request.method == "POST":
+        session["modal"] = False
+
+        if modal_form.validate_on_submit():
+            uniboard.load(session["random_id"])
+
+            if modal_form.cancel.data:
+                uniboard.delete()
+                return redirect(url_for("site.index"))
+
+            elif modal_form.submit.data:
+                return redirect(url_for("engine.play"))
+
+    return render_template(
+        "board.html",
+        title="UniChess Board",
+        board={"svg": UniBoard.render_base(), "id": session["random_id"]},
+        move_form=move_form,
+        modal_form=modal_form,
+        modal=session["modal"],
+        auth=session.get("auth", None),
+    )
+
+
+@bp.route("/board/join", methods=["GET", "POST"])
 @login_required
 def join():
 
@@ -44,9 +81,12 @@ def join():
 
             elif random_id := modal_form.random_id.data:
                 uniboard = UniBoard()
-                uniboard.load(random_id).add_guest(current_user.id)
+                uniboard.load(random_id)
 
-                return redirect(url_for("engine.board", random_id=random_id))
+                if uniboard.random_id:
+                    session["random_id"] = uniboard.random_id
+                    uniboard.add_guest(current_user.id)
+                    return redirect(url_for("engine.play"))
 
     return render_template(
         "board.html",
@@ -59,25 +99,16 @@ def join():
     )
 
 
-@bp.route("/board/<int:random_id>", methods=["GET", "POST"])
+@bp.route("/board/play", methods=["GET", "POST"])
 @login_required
-def board(random_id=None):
+def play():
 
     move_form = MoveForm()
-    modal_form = ModalForm()
 
     uniboard = UniBoard()
-    uniboard.load(random_id)
+    uniboard.load(session["random_id"])
 
     if request.method == "POST":
-        session["modal"] = False
-
-        if modal_form.validate_on_submit():
-            if modal_form.cancel.data:
-                uniboard.delete()
-
-                return redirect(url_for("site.index"))
-
         if move_form.validate_on_submit():
             uci = move_form.movement.data
             uniboard.move(uci)
@@ -85,9 +116,9 @@ def board(random_id=None):
     return render_template(
         "board.html",
         title="UniChess Board",
-        board={"svg": uniboard.render(), "id": uniboard.random_id},
+        board={"svg": uniboard.render(), "id": None},
         move_form=move_form,
-        modal_form=modal_form,
-        modal=session["modal"],
+        modal_form=None,
+        modal=None,
         auth=session.get("auth", None),
     )
