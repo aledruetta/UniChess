@@ -49,6 +49,9 @@
 - Database
 
 ```bash
+    make initdb
+
+    flask db migrate
     flask db upgrade
 
     flask createadmin

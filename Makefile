@@ -26,5 +26,8 @@ clean:
 	rm -rf docs/_build
 	pip install -e .['dev'] --upgrade --no-cache
 
+initdb:
+	FLASK_APP=unichess.app flask dropdb
+
 test:
 	FLASK_ENV=test pytest tests/ -v --cov=unichess
