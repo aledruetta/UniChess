@@ -15,6 +15,7 @@ lint:
 
 clean:
 	@find . -name '*.py[co]' -exec rm --force {} \;
+	@find ./ -name 'Thumbs.db' -exec rm -f {} \;
 	@find . -name '*~' -exec rm --force {} \;
 	rm -rf .cache
 	rm -rf build
@@ -26,8 +27,8 @@ clean:
 	pip install -e .['dev'] --upgrade --no-cache
 
 initdb:
-	FLASK_APP=unichess/app.py flask dropdb
 	FLASK_APP=unichess/app.py flask createdb
+	FLASK_APP=unichess/app.py flask db upgrade
 
 test:
 	FLASK_ENV=test pytest tests/ -v --cov=unichess
