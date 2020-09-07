@@ -1,4 +1,4 @@
-from .control import UniBoard   # noqa
+from .control import UniBoard  # noqa
 from .views import bp
 
 

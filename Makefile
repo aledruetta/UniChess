@@ -9,9 +9,9 @@ run:
 
 lint:
 	isort .
-	black -l 79 -t py38 .
+	black -l 79 -t py38 --exclude migrations .
 	flake8 setup.py unichess
-	shellcheck scripts/*
+	# shellcheck scripts/*
 
 clean:
 	@find . -name '*.py[co]' -exec rm --force {} \;

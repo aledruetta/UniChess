@@ -1,5 +1,5 @@
 from .control import login_manager
-from .models import User    # noqa
+from .models import User  # noqa
 from .views import bp
 
 
