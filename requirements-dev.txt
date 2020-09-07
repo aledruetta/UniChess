@@ -1,6 +1,7 @@
 black
 flake8
 flask-debugtoolbar
+flask-migrate
 flask-shell-ipython
 ipdb
 ipython

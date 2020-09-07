@@ -1,7 +1,6 @@
 email_validator
 flask
 flask-login
-flask-migrate
 flask-restful
 flask-sqlalchemy
 flask-wtf
