@@ -50,7 +50,11 @@ def listusers():
     """List users from database"""
 
     users = User.query.order_by(User.email).all()
-    click.echo(tabulate([
-        [u.username, u.email, "admin" if u.is_admin else None]
-        for u in users
-    ]))
+    click.echo(
+        tabulate(
+            [
+                [u.username, u.email, "admin" if u.is_admin else None]
+                for u in users
+            ]
+        )
+    )

@@ -1,5 +1,9 @@
 from unichess.ext.db.commands import (
-    createadmin, createuser, createdb, dropdb, listusers
+    createadmin,
+    createdb,
+    createuser,
+    dropdb,
+    listusers,
 )
 
 
