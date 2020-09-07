@@ -30,5 +30,8 @@ initdb:
 	FLASK_APP=unichess/app.py flask createdb
 	FLASK_APP=unichess/app.py flask db upgrade
 
+upgradedb:
+	FLASK_APP=unichess/app.py flask db upgrade
+
 test:
 	FLASK_ENV=test pytest tests/ -v --cov=unichess
