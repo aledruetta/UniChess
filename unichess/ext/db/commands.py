@@ -10,7 +10,6 @@ def createdb():
     """Create databases"""
 
     db.create_all()
-
     click.echo("Database created...")
 
 
@@ -18,7 +17,6 @@ def dropdb():
     """Drop databases"""
 
     db.drop_all()
-
     click.echo("Database droped...")
 
 
@@ -32,5 +30,4 @@ def createadmin(email, passwd):
     """Create admin user"""
 
     User.create(username="admin", email=email, password=passwd, is_admin=True)
-
     click.echo("User admin created...")
