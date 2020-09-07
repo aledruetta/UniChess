@@ -43,3 +43,12 @@ def createuser(username, email, passwd):
         username=username, email=email, password=passwd, is_admin=False
     )
     click.echo(f"User user {user} successfully created...")
+
+
+def listusers():
+    """List users from database"""
+
+    users = User.query.order_by(User.email).all()
+
+    for user in users:
+        print(user)
