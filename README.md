@@ -49,7 +49,11 @@
 - Database
 
 ```bash
-    make initdb
+    flask db upgrade
+
+    flask createadmin
+    flask createuser
+    flask listusers
 ```
 
 - Implementar logging
