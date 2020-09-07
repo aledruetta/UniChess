@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, time
 
 from unichess.ext.db import db
 
@@ -13,7 +13,13 @@ class Board(db.Model):
     )
 
     host_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    host_time = db.Column(
+        "host_time", db.Time, default=time(0, 0), nullable=False
+    )
     guest_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    guest_time = db.Column(
+        "guest_time", db.Time, default=time(0, 0), nullable=False
+    )
 
     movements = db.relationship(
         "Movement", backref=db.backref("board", lazy=True)
@@ -29,13 +35,6 @@ class Movement(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     uci = db.Column("uci", db.Unicode, nullable=False)
     color = db.Column("color", db.Boolean, nullable=False)
-    created_at = db.Column(
-        "created_at",
-        db.DateTime,
-        default=datetime.now,
-        onupdate=datetime.now,
-        nullable=False,
-    )
 
     board_id = db.Column(db.Integer, db.ForeignKey("board.id"), nullable=False)
 
