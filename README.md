@@ -50,7 +50,6 @@
 
 ```bash
     make initdb
-    make upgradedb
 ```
 
 - Implementar logging
