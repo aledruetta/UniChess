@@ -69,16 +69,6 @@ def signup():
 
     if request.method == "POST" and signup_form.validate_on_submit():
 
-        # *** form debug ***
-        # print(request.method)
-        # if form.validate():
-        #     print("Validate!")
-        # if form.is_submitted:
-        #     print("Is submitted!")
-        # if form.validate_on_submit():
-        #     print("Validate on submit!")
-        # print(form.errors)
-
         User.create(
             signup_form.username.data,
             signup_form.email.data,

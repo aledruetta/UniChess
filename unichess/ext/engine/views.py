@@ -37,27 +37,24 @@ def create():
 
     uniboard = UniBoard()
 
-    if request.method == "GET":
-        uniboard.create()
-        session["random_id"] = uniboard.random_id
-
-    elif request.method == "POST":
+    if request.method == "POST" and modal_form.validate_on_submit():
         session["modal"] = False
 
-        if modal_form.validate_on_submit():
+        if modal_form.cancel.data:
             uniboard.load(session["random_id"])
+            uniboard.delete()
+            return redirect(url_for("site.index"))
 
-            if modal_form.cancel.data:
-                uniboard.delete()
-                return redirect(url_for("site.index"))
+        return redirect(url_for("engine.play"))
 
-            elif modal_form.submit.data:
-                return redirect(url_for("engine.play"))
+    elif request.method == "GET":
+        uniboard.create()
+        session["random_id"] = uniboard.random_id
 
     return render_template(
         "board.html",
         title="UniChess Board",
-        board={"svg": UniBoard.render_base(), "id": session["random_id"]},
+        board={"svg": UniBoard.render_base(), "id": uniboard.random_id},
         move_form=move_form,
         modal_form=modal_form,
         modal=session["modal"],
@@ -72,21 +69,21 @@ def join():
     move_form = MoveForm()
     modal_form = ModalForm()
 
-    if request.method == "POST":
-        session["modal"] = False
+    if request.method == "POST" and modal_form.validate_on_submit():
 
-        if modal_form.validate_on_submit():
-            if modal_form.cancel.data:
-                return redirect(url_for("site.index"))
+        if modal_form.cancel.data:
+            session["modal"] = False
+            return redirect(url_for("site.index"))
 
-            elif random_id := modal_form.random_id.data:
-                uniboard = UniBoard()
-                uniboard.load(random_id)
+        else:
+            uniboard = UniBoard()
+            uniboard.load(modal_form.random_id.data)
 
-                if uniboard.random_id:
-                    session["random_id"] = uniboard.random_id
-                    uniboard.add_guest(current_user.id)
-                    return redirect(url_for("engine.play"))
+            if uniboard.random_id:
+                session["modal"] = False
+                session["random_id"] = uniboard.random_id
+                uniboard.add_guest(current_user.id)
+                return redirect(url_for("engine.play"))
 
     return render_template(
         "board.html",
@@ -116,7 +113,7 @@ def play():
     return render_template(
         "board.html",
         title="UniChess Board",
-        board={"svg": uniboard.render(), "id": None},
+        board={"svg": uniboard.render(), "id": uniboard.random_id},
         move_form=move_form,
         modal_form=None,
         modal=None,
