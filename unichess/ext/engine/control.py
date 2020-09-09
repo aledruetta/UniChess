@@ -53,7 +53,7 @@ class UniBoard(chess.Board):
         db_board.guest_id = guest_id
         db.session.commit()
 
-    def save(self, uci):
+    def _save(self, uci):
         movement = Movement(uci=uci, color=self.turn, board_id=self._id)
 
         db.session.add(movement)
@@ -64,11 +64,11 @@ class UniBoard(chess.Board):
 
         if movement in self.legal_moves:
             self.push(movement)
-            self.save(uci)
+            self._save(uci)
+
+    def render(self):
+        return chess.svg.board(board=self)
 
     @staticmethod
     def render_base():
         return chess.svg.board(chess.BaseBoard())
-
-    def render(self):
-        return chess.svg.board(board=self)
