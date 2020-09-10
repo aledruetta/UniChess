@@ -1,8 +1,11 @@
 email_validator
 flask
+flask-cors
 flask-login
 flask-restful
+flask-socketio
 flask-sqlalchemy
 flask-wtf
+geventlet
 python-chess
 tabulate

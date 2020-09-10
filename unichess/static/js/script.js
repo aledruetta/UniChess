@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+  var socket = io();
+
+  socket.on("connect", function() {
+    socket.emit("my event", {data: "User has connected!"});
+  });
+
   // Check for click events on the navbar burger icon
   $(".navbar-burger").click(function() {
 
