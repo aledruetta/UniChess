@@ -11,6 +11,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import InputRequired, Length
 
+from unichess.ext.socketio import socketio
+
 from .control import UniBoard
 
 bp = Blueprint("engine", __name__)
@@ -109,6 +111,10 @@ def play():
         if move_form.validate_on_submit():
             uci = move_form.movement.data
             uniboard.move(uci)
+
+            event = str(session["random_id"])
+            data = {"randomId": session["random_id"]}
+            socketio.emit(event, data)
 
     return render_template(
         "board.html",

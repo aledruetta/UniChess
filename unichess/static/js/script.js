@@ -1,11 +1,5 @@
 $(document).ready(function() {
 
-  var socket = io();
-
-  socket.on("connect", function() {
-    socket.emit("my event", {data: "User has connected!"});
-  });
-
   // Check for click events on the navbar burger icon
   $(".navbar-burger").click(function() {
 
@@ -14,4 +8,27 @@ $(document).ready(function() {
       $(".navbar-menu").toggleClass("is-active");
 
   });
+
+  let randomIdCreate = $("#random-id-create").text();
+  let randomIdStored = sessionStorage.getItem("randomId");
+
+  if (randomIdCreate > 0 && randomIdCreate !== randomIdStored) {
+    sessionStorage.setItem("randomId", randomIdCreate.toString().trim());
+  }
+
+  $("#modal-form").submit(function(event) {
+    let randomIdJoin = $("#random-id-join").val();
+
+    if (randomIdJoin > 0) {
+      sessionStorage.setItem("randomId", randomIdJoin.toString().trim());
+    }
+  });
+
+  let socket = io();
+  let event = randomIdStored.toString().trim();
+
+  socket.on(event, function() {
+    window.location.href = window.location.href;
+  });
+
 });

@@ -12,4 +12,4 @@ def handle_message(msg):
 
 def init_app(app):
     cors.init_app(app)
-    socketio.init_app(app, cors_allowed_origins='*')
+    socketio.init_app(app, cors_allowed_origins="*")
