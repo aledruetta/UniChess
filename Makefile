@@ -28,6 +28,7 @@ clean:
 
 initdb:
 	FLASK_APP=unichess.app flask dropdb
+	FLASK_APP=unichess.app flask createdb
 
 test:
 	FLASK_ENV=test pytest tests/ -v --cov=unichess
