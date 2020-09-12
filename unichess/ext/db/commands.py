@@ -19,7 +19,6 @@ def dropdb():
 
     db.drop_all()
     click.echo("Database droped...")
-    createdb()
 
 
 # @click.option("--admin", "-a", required=True, is_flag=True, default=False)
