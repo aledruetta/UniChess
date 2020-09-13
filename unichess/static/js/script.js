@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(() => {
 
   // Check for click events on the navbar burger icon
-  $(".navbar-burger").click(function() {
+  $(".navbar-burger").click(() => {
 
       // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
       $(".navbar-burger").toggleClass("is-active");
@@ -42,14 +42,14 @@ $(document).ready(function() {
   setRandomIdStorage(randomIdCreate, randomIdStored);
 
   // Cancel event
-  $("#modal-cancel").click(function() {
+  $("#modal-cancel").click(() => {
     if (sessionStorage.getItem("randomId")) {
       sessionStorage.removeItem("randomId");
     }
   });
 
   // Submit event
-  $("#modal-form").submit(function() {
+  $("#modal-form").submit(() => {
     let randomIdJoin = getRandomIdJoin();
 
     if (randomIdJoin) {
@@ -60,8 +60,7 @@ $(document).ready(function() {
   // SocketIO event
   let socket = io();
 
-  socket.on(randomIdStored, function() {
-    alert(randomIdStored);
+  socket.on(randomIdStored, () => {
     window.location.href = window.location.href;
   });
 
