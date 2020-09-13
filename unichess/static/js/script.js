@@ -9,26 +9,46 @@ $(document).ready(function() {
 
   });
 
-  let randomIdCreate = $("#random-id-create").text();
-  let randomIdStored = sessionStorage.getItem("randomId");
+  let randomIdStored = null;
+  let randomIdCreate = null;
 
-  if (randomIdCreate > 0 && randomIdCreate !== randomIdStored) {
-    sessionStorage.setItem("randomId", randomIdCreate.toString().trim());
+  if ($("#random-id-create").text()) {
+    randomIdCreate = $("#random-id-create").text().trim();
   }
 
-  $("#modal-form").submit(function(event) {
-    let randomIdJoin = $("#random-id-join").val();
+  if (sessionStorage.getItem("randomId")) {
+    randomIdStored = sessionStorage.getItem("randomId");
+  }
 
-    if (randomIdJoin > 0) {
-      sessionStorage.setItem("randomId", randomIdJoin.toString().trim());
+  if (randomIdCreate && randomIdCreate !== randomIdStored) {
+    sessionStorage.setItem("randomId", randomIdCreate);
+  }
+
+  $("#modal-cancel").click(function() {
+    if (sessionStorage.getItem("randomId")) {
+      sessionStorage.removeItem("randomId");
+    }
+  });
+
+  $("#modal-form").submit(function() {
+    let randomIdJoin = null;
+    if ($("#random-id-join").val()) {
+      randomIdJoin = $("#random-id-join").val().trim();
+    }
+
+    if (randomIdJoin) {
+      sessionStorage.setItem("randomId", randomIdJoin);
     }
   });
 
   let socket = io();
-  let event = randomIdStored.toString().trim();
+  let event_name = null;
+  if (randomIdStored) {
+    event_name = randomIdStored.toString();
 
-  socket.on(event, function() {
-    window.location.href = window.location.href;
-  });
+    socket.on(event_name, function() {
+      window.location.href = window.location.href;
+    });
+  }
 
 });

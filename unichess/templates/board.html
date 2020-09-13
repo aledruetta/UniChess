@@ -89,11 +89,25 @@
 
 						<div class="field is-grouped">
 							<div class="control">
-								{{ modal_form.submit(class="button is-link is-success", type="submit", value="Pronto!") }}
+								{{
+                  modal_form.submit(
+                    id="modal-submit",
+                    class="button is-link is-success",
+                    type="submit",
+                    value="Pronto!"
+                  )
+                }}
 							</div>
 
 							<div class="control">
-								{{ modal_form.cancel(class="button is-link is-success is-light", type="submit", value="Cancelar") }}
+								{{
+                  modal_form.cancel(
+                    id="modal-cancel",
+                    class="button is-link is-success is-light",
+                    type="submit",
+                    value="Cancelar"
+                  )
+                }}
 							</div>
 						</div>
 

@@ -37,20 +37,18 @@ def create():
     move_form = MoveForm()
     modal_form = ModalForm()
 
-    uniboard = UniBoard()
-
     if request.method == "POST" and modal_form.validate_on_submit():
         session["modal"] = False
 
         if modal_form.cancel.data:
-            uniboard.load(session["random_id"])
-            uniboard.delete()
+            UniBoard(session["random_id"]).destroy()
+            session["random_id"] = None
             return redirect(url_for("site.index"))
 
         return redirect(url_for("engine.play"))
 
     elif request.method == "GET":
-        uniboard.create()
+        uniboard = UniBoard()
         session["random_id"] = uniboard.random_id
 
     return render_template(
@@ -78,8 +76,7 @@ def join():
             return redirect(url_for("site.index"))
 
         else:
-            uniboard = UniBoard()
-            uniboard.load(modal_form.random_id.data)
+            uniboard = UniBoard(modal_form.random_id.data)
 
             if uniboard.random_id:
                 session["modal"] = False
@@ -104,8 +101,7 @@ def play():
 
     move_form = MoveForm()
 
-    uniboard = UniBoard()
-    uniboard.load(session["random_id"])
+    uniboard = UniBoard(session["random_id"])
 
     if request.method == "POST":
         if move_form.validate_on_submit():

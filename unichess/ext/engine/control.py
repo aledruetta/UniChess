@@ -13,48 +13,55 @@ MAX_ID = 2 ** 63
 
 
 class UniBoard(chess.Board):
-    def __init__(self, fen=chess.STARTING_FEN):
-        super().__init__(fen)
+    def __init__(self, random_id=None):
+        super().__init__()
 
-        self._id = None
-        self.random_id = None
+        self.id = None
+        self.random_id = random_id
+
+        if not random_id:
+            self._create()
+        else:
+            self._load(random_id)
+
+    def _create(self):
         self.turn = chess.WHITE
-
-    def create(self):
         self.random_id = randint(MIN_ID, MAX_ID)
 
         db_board = Board(random_id=self.random_id, host_id=current_user.id)
         db.session.add(db_board)
         db.session.commit()
 
-        self._id = db_board.id
+        self.id = db_board.id
 
-    def load(self, random_id):
+    def _load(self, random_id):
         try:
             db_board = Board.query.filter_by(random_id=random_id).first()
-            self._id = db_board.id
+            self.id = db_board.id
         except AttributeError as err:
             print(err)
         else:
             self.random_id = random_id
-            db_movements = Movement.query.filter_by(board_id=self._id).all()
+            db_movements = Movement.query.filter_by(board_id=self.id).all()
 
             for movement in db_movements:
                 movement = chess.Move.from_uci(movement.uci)
                 self.push(movement)
 
-    def delete(self):
-        print(self.random_id)
-        Board.query.filter_by(random_id=self.random_id).delete()
+    def destroy(self, random_id=None):
+        if not random_id:
+            random_id = self.random_id
+
+        Board.query.filter_by(random_id=random_id).delete()
         db.session.commit()
 
     def add_guest(self, guest_id):
-        db_board = Board.query.get(self._id)
+        db_board = Board.query.get(self.id)
         db_board.guest_id = guest_id
         db.session.commit()
 
     def _save(self, uci):
-        movement = Movement(uci=uci, color=self.turn, board_id=self._id)
+        movement = Movement(uci=uci, color=self.turn, board_id=self.id)
 
         db.session.add(movement)
         db.session.commit()
@@ -67,7 +74,7 @@ class UniBoard(chess.Board):
             self._save(uci)
 
     def render(self):
-        return chess.svg.board(board=self)
+        return chess.svg.board(self)
 
     @staticmethod
     def render_base():
