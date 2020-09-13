@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  let socket = io();
+
   // Check for click events on the navbar burger icon
   $(".navbar-burger").click(function() {
 
@@ -9,44 +11,57 @@ $(document).ready(function() {
 
   });
 
-  let randomIdStored = null;
-  let randomIdCreate = null;
-
-  if ($("#random-id-create").text()) {
-    randomIdCreate = $("#random-id-create").text().trim();
+  getRandomIdCreate = () => {
+    if ($("#random-id-create").text()) {
+      return $("#random-id-create").text().trim();
+    }
+    return null;
   }
 
-  if (sessionStorage.getItem("randomId")) {
-    randomIdStored = sessionStorage.getItem("randomId");
+  getRandomIdStorage = () => {
+    if (sessionStorage.getItem("randomId")) {
+      return sessionStorage.getItem("randomId").toString().trim();
+    }
+    return null;
   }
 
-  if (randomIdCreate && randomIdCreate !== randomIdStored) {
-    sessionStorage.setItem("randomId", randomIdCreate);
+  setRandomIdStorage = (randomIdCreate, randomIdStorage) => {
+    if (randomIdCreate && randomIdCreate !== randomIdStored) {
+      sessionStorage.setItem("randomId", randomIdCreate);
+    }
   }
 
+  getRandomIdJoin = () => {
+    if ($("#random-id-join").val()) {
+      return $("#random-id-join").val().trim();
+    }
+    return null;
+  }
+
+  let randomIdStored = getRandomIdStorage();
+  let randomIdCreate = getRandomIdCreate();
+
+  setRandomIdStorage(randomIdCreate, randomIdStored);
+
+  // Cancel event
   $("#modal-cancel").click(function() {
     if (sessionStorage.getItem("randomId")) {
       sessionStorage.removeItem("randomId");
     }
   });
 
+  // Submit event
   $("#modal-form").submit(function() {
-    let randomIdJoin = null;
-    if ($("#random-id-join").val()) {
-      randomIdJoin = $("#random-id-join").val().trim();
-    }
+    let randomIdJoin = getRandomIdJoin();
 
     if (randomIdJoin) {
       sessionStorage.setItem("randomId", randomIdJoin);
     }
   });
 
-  let socket = io();
-  let event_name = null;
+  // SocketIO event
   if (randomIdStored) {
-    event_name = randomIdStored.toString();
-
-    socket.on(event_name, function() {
+    socket.on(randomIdStored, function() {
       window.location.href = window.location.href;
     });
   }
