@@ -9,58 +9,67 @@ $(document).ready(() => {
 
   });
 
-  getRandomIdCreate = () => {
+  getIdCreateHtml = () => {
     if ($("#random-id-create").text()) {
       return $("#random-id-create").text().trim();
     }
     return null;
   }
 
-  getRandomIdStorage = () => {
-    if (sessionStorage.getItem("randomId")) {
-      return sessionStorage.getItem("randomId").toString().trim();
-    }
-    return null;
-  }
-
-  setRandomIdStorage = (randomIdCreate, randomIdStorage) => {
-    if (randomIdCreate && randomIdCreate !== randomIdStored) {
-      sessionStorage.setItem("randomId", randomIdCreate);
-    }
-  }
-
-  getRandomIdJoin = () => {
+  getIdJoinHtml = () => {
     if ($("#random-id-join").val()) {
       return $("#random-id-join").val().trim();
     }
     return null;
   }
 
-  let randomIdStored = getRandomIdStorage();
-  let randomIdCreate = getRandomIdCreate();
-
-  setRandomIdStorage(randomIdCreate, randomIdStored);
-
-  // Cancel event
-  $("#modal-cancel").click(() => {
-    if (sessionStorage.getItem("randomId")) {
-      sessionStorage.removeItem("randomId");
+  getColorHtml = () => {
+    if ($("#user-color").text()) {
+      return $("#user-color").text().trim();
     }
+    return null;
+  }
+
+  getIdStored = () => {
+    if (sessionStorage.getItem("id"))
+      return sessionStorage.getItem("id").toString().trim();
+    return null;
+  }
+
+  setIdStored = (id) => {
+    if (id && id !== getIdStored())
+      sessionStorage.setItem("id", id);
+  }
+
+  getColorStored = () => {
+    if (sessionStorage.getItem("color"))
+      return sessionStorage.getItem("color").toString().trim();
+    return null;
+  }
+
+  setColorStored = (color) => {
+    if (color && color !== getColorStored())
+      sessionStorage.setItem("color", color);
+  }
+
+  setColorStored(getColorHtml());
+  setIdStored(getIdCreateHtml());
+
+  // Form cancel event
+  $("#modal-cancel").click(() => {
+    if (getIdStored("id"))
+      sessionStorage.removeItem("id");
   });
 
-  // Submit event
+  // Join submit event
   $("#modal-form").submit(() => {
-    let randomIdJoin = getRandomIdJoin();
-
-    if (randomIdJoin) {
-      sessionStorage.setItem("randomId", randomIdJoin);
-    }
+    setIdStored(getIdJoinHtml());
   });
 
   // SocketIO event
   let socket = io();
 
-  socket.on(randomIdStored, () => {
+  socket.on(getIdStored(), () => {
     window.location.href = window.location.href;
   });
 

@@ -48,6 +48,16 @@ class UniBoard(chess.Board):
                 movement = chess.Move.from_uci(movement.uci)
                 self.push(movement)
 
+    def _save(self, uci):
+        movement = Movement(uci=uci, color=self.turn, board_id=self.id)
+
+        db.session.add(movement)
+        db.session.commit()
+
+    def _get_host_id(self):
+        db_board = Board.query.get(self.id)
+        return db_board.host_id
+
     def destroy(self, random_id=None):
         if not random_id:
             random_id = self.random_id
@@ -60,11 +70,11 @@ class UniBoard(chess.Board):
         db_board.guest_id = guest_id
         db.session.commit()
 
-    def _save(self, uci):
-        movement = Movement(uci=uci, color=self.turn, board_id=self.id)
-
-        db.session.add(movement)
-        db.session.commit()
+    def get_color(self):
+        if current_user.id == self._get_host_id():
+            return "white"
+        else:
+            return "black"
 
     def move(self, uci):
         movement = chess.Move.from_uci(uci)

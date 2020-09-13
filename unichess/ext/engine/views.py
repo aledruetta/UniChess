@@ -109,13 +109,18 @@ def play():
             uniboard.move(uci)
 
             event = str(session["random_id"])
-            data = {"randomId": session["random_id"]}
+            data = {"id": event}
+            print(event, data)
             socketio.emit(event, data)
 
     return render_template(
         "board.html",
         title="UniChess Board",
-        board={"svg": uniboard.render(), "id": uniboard.random_id},
+        board={
+            "id": uniboard.random_id,
+            "color": uniboard.get_color(),
+            "svg": uniboard.render(),
+        },
         move_form=move_form,
         modal_form=None,
         modal=None,
