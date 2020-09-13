@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-  let socket = io();
-
   // Check for click events on the navbar burger icon
   $(".navbar-burger").click(function() {
 
@@ -60,10 +58,11 @@ $(document).ready(function() {
   });
 
   // SocketIO event
-  if (randomIdStored) {
-    socket.on(randomIdStored, function() {
-      window.location.href = window.location.href;
-    });
-  }
+  let socket = io();
+
+  socket.on(randomIdStored, function() {
+    alert(randomIdStored);
+    window.location.href = window.location.href;
+  });
 
 });
