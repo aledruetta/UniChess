@@ -1,6 +1,6 @@
 install:
 	pip install --upgrade pip
-	pip install -e .['dev']
+	pip install -e .['dev'] --use-feature=2020-resolver
 	pip check
 
 run: export FLASK_APP=unichess/app
