@@ -10,6 +10,8 @@ from .models import Board, Movement
 
 MIN_ID = 1
 MAX_ID = 2 ** 63
+BLACK = "black"
+WHITE = "white"
 
 
 class UniBoard(chess.Board):
@@ -58,6 +60,10 @@ class UniBoard(chess.Board):
         db_board = Board.query.get(self.id)
         return db_board.host_id
 
+    def _get_guest_id(self):
+        db_board = Board.query.get(self.id)
+        return db_board.guest_id
+
     def destroy(self, random_id=None):
         if not random_id:
             random_id = self.random_id
@@ -70,11 +76,15 @@ class UniBoard(chess.Board):
         db_board.guest_id = guest_id
         db.session.commit()
 
-    def get_color(self):
+    def get_user_color(self):
         if current_user.id == self._get_host_id():
-            return "white"
-        else:
-            return "black"
+            return WHITE
+        return BLACK
+
+    def get_rival_color(self):
+        if current_user.id == self._get_host_id():
+            return BLACK
+        return WHITE
 
     def move(self, uci):
         movement = chess.Move.from_uci(uci)

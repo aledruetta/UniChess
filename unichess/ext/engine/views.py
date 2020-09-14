@@ -104,15 +104,16 @@ def play():
     uniboard = UniBoard(session["random_id"])
 
     if request.method == "POST":
-        if move_form.validate_on_submit():
+        user_color = uniboard.get_user_color()
+        rival_color = uniboard.get_rival_color()
+        turn_color = "white" if uniboard.turn else "black"
+
+        if move_form.validate_on_submit() and user_color == turn_color:
             uci = move_form.movement.data
             uniboard.move(uci)
 
-            color = "white" if uniboard.get_color() == "black" else "black"
-            event = (
-                f'{session["random_id"]}_{color}'
-            )
-            # data = {"id": event}
+            event = f'{session["random_id"]}_{rival_color}'
+
             socketio.emit(event)
 
     return render_template(
@@ -121,7 +122,7 @@ def play():
         board={
             "id": uniboard.random_id,
             "username": current_user.username,
-            "color": uniboard.get_color(),
+            "color": uniboard.get_user_color(),
             "svg": uniboard.render(),
         },
         move_form=move_form,
