@@ -6,6 +6,6 @@ flask-restful
 flask-socketio
 flask-sqlalchemy
 flask-wtf
-geventlet
+eventlet
 python-chess
 tabulate
