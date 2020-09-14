@@ -86,12 +86,17 @@ class UniBoard(chess.Board):
             return BLACK
         return WHITE
 
+    def get_turn_color(self):
+        return WHITE if self.turn else BLACK
+
     def move(self, uci):
         movement = chess.Move.from_uci(uci)
 
         if movement in self.legal_moves:
             self.push(movement)
             self._save(uci)
+            return True
+        return False
 
     def render(self):
         return chess.svg.board(self)

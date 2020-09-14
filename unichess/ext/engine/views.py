@@ -99,21 +99,17 @@ def join():
 @login_required
 def play():
 
-    move_form = MoveForm()
+    form = MoveForm()
 
     uniboard = UniBoard(session["random_id"])
+    user = uniboard.get_user_color()
+    turn = uniboard.get_turn_color()
+    rival = uniboard.get_rival_color()
 
-    if request.method == "POST":
-        user_color = uniboard.get_user_color()
-        rival_color = uniboard.get_rival_color()
-        turn_color = "white" if uniboard.turn else "black"
-
-        if move_form.validate_on_submit() and user_color == turn_color:
-            uci = move_form.movement.data
-            uniboard.move(uci)
-
-            event = f'{session["random_id"]}_{rival_color}'
-
+    if request.method == "POST" and form.validate_on_submit() and user == turn:
+        uci = form.movement.data
+        if uniboard.move(uci):
+            event = f'{session["random_id"]}_{rival}'
             socketio.emit(event)
 
     return render_template(
@@ -122,10 +118,10 @@ def play():
         board={
             "id": uniboard.random_id,
             "username": current_user.username,
-            "color": uniboard.get_user_color(),
+            "color": user,
             "svg": uniboard.render(),
         },
-        move_form=move_form,
+        move_form=form,
         modal_form=None,
         modal=None,
         auth=session.get("auth", None),
