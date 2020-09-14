@@ -1,6 +1,7 @@
 install:
 	pip install --upgrade pip
 	pip install -e .['dev']
+	pip check
 
 run: export FLASK_APP=unichess/app
 run: export FLASK_ENV=development
