@@ -52,8 +52,20 @@ $(document).ready(() => {
       sessionStorage.setItem("color", color);
   }
 
-  setColorStored(getColorHtml());
-  setIdStored(getIdCreateHtml());
+  pathname = window.location.pathname;
+
+  if (
+    pathname === "/board/play"   ||
+    pathname === "/board/create" ||
+    pathname === "/board/join"
+  ) {
+    setColorStored(getColorHtml());
+    setIdStored(getIdCreateHtml());
+  }
+  else {
+    sessionStorage.removeItem("id");
+    sessionStorage.removeItem("color");
+  }
 
   // Form cancel event
   $("#modal-cancel").click(() => {
