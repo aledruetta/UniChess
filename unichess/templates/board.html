@@ -10,9 +10,14 @@
 
       <div class="column is-half">
 
-        <div id="user-color">
-          {{ board.color }}
+        <div>
+          <p class="has-text-dark has-text-weight-light">
+            <span class="has-text-weight-bold">@{{ board.username }}</span>
+            (<span id="user-color">{{ board.color }}</span>)
+            #{{ board.id }}
+          </p>
         </div>
+
         <div>
           {{ board.svg | safe }}
         </div>

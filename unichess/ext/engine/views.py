@@ -118,6 +118,7 @@ def play():
         title="UniChess Board",
         board={
             "id": uniboard.random_id,
+            "username": current_user.username,
             "color": uniboard.get_color(),
             "svg": uniboard.render(),
         },
