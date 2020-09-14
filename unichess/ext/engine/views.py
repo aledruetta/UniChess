@@ -108,10 +108,12 @@ def play():
             uci = move_form.movement.data
             uniboard.move(uci)
 
-            event = str(session["random_id"])
-            data = {"id": event}
-            print(event, data)
-            socketio.emit(event, data)
+            color = "white" if uniboard.get_color() == "black" else "black"
+            event = (
+                f'{session["random_id"]}_{color}'
+            )
+            # data = {"id": event}
+            socketio.emit(event)
 
     return render_template(
         "board.html",

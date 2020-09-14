@@ -54,11 +54,7 @@ $(document).ready(() => {
 
   pathname = window.location.pathname;
 
-  if (
-    pathname === "/board/play"   ||
-    pathname === "/board/create" ||
-    pathname === "/board/join"
-  ) {
+  if (pathname.includes("/board/")) {
     setColorStored(getColorHtml());
     setIdStored(getIdCreateHtml());
   }
@@ -81,7 +77,8 @@ $(document).ready(() => {
   // SocketIO event
   let socket = io();
 
-  socket.on(getIdStored(), () => {
+  event = getIdStored() + "_" + getColorStored();
+  socket.on(event, () => {
     window.location.href = window.location.href;
   });
 
