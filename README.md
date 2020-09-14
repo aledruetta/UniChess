@@ -1,6 +1,10 @@
 # UniChess
 
-[<img src="art/youtube.png" width="50%">](https://youtu.be/PvlhOd1It4U)
+### Estado Atual do projeto
+
+[<img src="art/youtube.png" width="50%">](https://youtu.be/bj4vwHOVqo8)
+
+### Instalar e executar
 
 - Criar ambiente virtual
 
@@ -58,13 +62,3 @@
     flask createuser
     flask listusers
 ```
-
-- Implementar logging
-
-```python
-    from flask import current_app
-
-    # Com DEBUG_TB_ENABLED em ext/config
-    current_app.logger.debug("message")
-```
-
