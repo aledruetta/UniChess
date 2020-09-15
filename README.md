@@ -58,6 +58,7 @@
     flask db migrate
     flask db upgrade
 
+    flask createadb
     flask createadmin
     flask createuser
     flask listusers
