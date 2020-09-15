@@ -1,8 +1,11 @@
 from unichess.ext.db.commands import (
-    createadmin,
     createdb,
-    createuser,
     dropdb,
+)
+
+from unichess.ext.auth.commands import (
+    createadmin,
+    createuser,
     listusers,
 )
 
