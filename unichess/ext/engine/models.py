@@ -12,11 +12,17 @@ class Board(db.Model):
         "created_at", db.DateTime, default=datetime.now, nullable=False
     )
 
-    host_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    host_id = db.Column(
+        "host_id",
+        db.Integer,
+        db.ForeignKey("user.id"),
+        unique=True,
+        nullable=False
+    )
     host_time = db.Column(
         "host_time", db.Time, default=time(0, 0), nullable=False
     )
-    guest_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    guest_id = db.Column("guest_id", db.Integer, db.ForeignKey("user.id"))
     guest_time = db.Column(
         "guest_time", db.Time, default=time(0, 0), nullable=False
     )

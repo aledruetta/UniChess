@@ -1,13 +1,5 @@
-from unichess.ext.db.commands import (
-    createdb,
-    dropdb,
-)
-
-from unichess.ext.auth.commands import (
-    createadmin,
-    createuser,
-    listusers,
-)
+from unichess.ext.auth.commands import createadmin, createuser, listusers
+from unichess.ext.db.commands import createdb, dropdb
 
 
 def init_app(app):

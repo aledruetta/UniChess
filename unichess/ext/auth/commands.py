@@ -3,7 +3,6 @@ from tabulate import tabulate
 
 from .models import User
 
-
 # @click.option("--admin", "-a", required=True, is_flag=True, default=False)
 # def createuser(email, passwd, is_admin):
 
