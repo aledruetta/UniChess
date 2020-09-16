@@ -8,13 +8,13 @@ from unichess.ext.db import db
 
 from .models import Board, Movement
 
-MIN_ID = 1
-MAX_ID = 2 ** 63
-BLACK = "black"
-WHITE = "white"
-
 
 class UniBoard(chess.Board):
+    MIN_ID = 1
+    MAX_ID = 2 ** 63
+    BLACK = "black"
+    WHITE = "white"
+
     def __init__(self, random_id=None):
         super().__init__()
 
@@ -28,7 +28,7 @@ class UniBoard(chess.Board):
 
     def _create(self):
         self.turn = chess.WHITE
-        self.random_id = randint(MIN_ID, MAX_ID)
+        self.random_id = randint(self.MIN_ID, self.MAX_ID)
 
         db_board = Board(random_id=self.random_id, host_id=current_user.id)
         db.session.add(db_board)
@@ -78,16 +78,16 @@ class UniBoard(chess.Board):
 
     def get_user_color(self):
         if current_user.id == self._get_host_id():
-            return WHITE
-        return BLACK
+            return self.WHITE
+        return self.BLACK
 
     def get_rival_color(self):
         if current_user.id == self._get_host_id():
-            return BLACK
-        return WHITE
+            return self.BLACK
+        return self.WHITE
 
     def get_turn_color(self):
-        return WHITE if self.turn else BLACK
+        return self.WHITE if self.turn else self.BLACK
 
     def move(self, uci):
         movement = chess.Move.from_uci(uci)
