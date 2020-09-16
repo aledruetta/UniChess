@@ -126,3 +126,19 @@ def play():
         modal=None,
         auth=session.get("auth", None),
     )
+
+
+@bp.route("/board/leave")
+@login_required
+def leave():
+
+    uniboard = UniBoard(session["random_id"])
+    color = uniboard.get_user_color()
+
+    if color == uniboard.WHITE:
+        uniboard.destroy()
+
+    event = f'{session["random_id"]}_{color}_leave'
+    socketio.emit(event)
+
+    return redirect(url_for("site.index"))
