@@ -1,5 +1,7 @@
 import click
 
+from sqlalchemy.exc import OperationalError
+
 from unichess.ext.db import db
 
 
@@ -15,11 +17,14 @@ def truncatedb():
 
     meta = db.metadata
 
-    for table in reversed(meta.sorted_tables):
-        click.echo(f"Truncando {table} ...")
-        db.session.execute(table.delete())
-
-    db.session.commit()
+    try:
+        for table in reversed(meta.sorted_tables):
+            click.echo(f"Truncando {table} ...")
+            db.session.execute(table.delete())
+    except OperationalError:
+        click.echo("Você tentou truncar tabelas inexistentes... ")
+    else:
+        db.session.commit()
 
 
 def dropdb():
