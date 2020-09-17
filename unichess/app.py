@@ -2,7 +2,7 @@
 
 from flask import Flask
 
-from unichess.ext import auth, cli, config, db, engine, site, socketio, toolbar
+from unichess.ext import auth, cli, config, db, engine, site, socket, toolbar
 
 
 def create_app():
@@ -14,7 +14,7 @@ def create_app():
     auth.init_app(app)
     engine.init_app(app)
     site.init_app(app)
-    socketio.init_app(app)
+    socket.init_app(app)
     toolbar.init_app(app)
 
     return app
@@ -22,4 +22,4 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    socketio.socketio.run(app, debug=True)
+    socket.socketio.run(app, debug=True)

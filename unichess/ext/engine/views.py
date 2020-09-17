@@ -11,7 +11,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import InputRequired, Length
 
-from unichess.ext.socketio import socketio
+from unichess.ext.socket import socketio
 
 from .control import UniBoard
 
