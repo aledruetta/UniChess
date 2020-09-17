@@ -28,6 +28,7 @@ clean:
 	pip install -e .['dev'] --upgrade --no-cache
 
 initdb:
+	FLASK_APP=unichess.app flask truncatedb
 	FLASK_APP=unichess.app flask db upgrade
 
 test:
