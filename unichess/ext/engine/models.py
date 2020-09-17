@@ -17,7 +17,7 @@ class Board(db.Model):
         db.Integer,
         db.ForeignKey("user.id"),
         unique=True,
-        nullable=False
+        nullable=False,
     )
     host_time = db.Column(
         "host_time", db.Time, default=time(0, 0), nullable=False

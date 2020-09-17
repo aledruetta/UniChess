@@ -1,4 +1,5 @@
 import click
+from sqlalchemy.exc import OperationalError
 from tabulate import tabulate
 
 from .models import User
@@ -12,8 +13,13 @@ from .models import User
 def createadmin(email, passwd):
     """Create admin user"""
 
-    User.create(username="admin", email=email, password=passwd, is_admin=True)
-    click.echo("User admin successfully created...")
+    try:
+        User.create(
+            username="admin", email=email, password=passwd, is_admin=True
+        )
+        click.echo("User admin successfully created...")
+    except OperationalError:
+        click.echo("Tabela de usuários inexistente...")
 
 
 @click.option("--username", "-u", required=True)
@@ -22,21 +28,29 @@ def createadmin(email, passwd):
 def createuser(username, email, passwd):
     """Create normal user"""
 
-    user = User.create(
-        username=username, email=email, password=passwd, is_admin=False
-    )
-    click.echo(f"User <{user.username}, {user.email}> successfully created...")
+    try:
+        user = User.create(
+            username=username, email=email, password=passwd, is_admin=False
+        )
+        click.echo(
+            f"User <{user.username}, {user.email}> successfully created..."
+        )
+    except OperationalError:
+        click.echo("Tabela de usuários inexistente...")
 
 
 def listusers():
     """List users from database"""
 
-    users = User.query.order_by(User.email).all()
-    click.echo(
-        tabulate(
-            [
-                [u.username, u.email, "admin" if u.is_admin else None]
-                for u in users
-            ]
+    try:
+        users = User.query.order_by(User.email).all()
+        click.echo(
+            tabulate(
+                [
+                    [u.username, u.email, "admin" if u.is_admin else None]
+                    for u in users
+                ]
+            )
         )
-    )
+    except OperationalError:
+        click.echo("Tabela de usuários inexistente...")

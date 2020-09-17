@@ -1,4 +1,4 @@
-from unichess.ext.auth.commands import createadmin, createuser, listusers
+from unichess.ext.auth import createadmin, createuser, listusers
 from unichess.ext.db.commands import createdb, dropdb
 
 
