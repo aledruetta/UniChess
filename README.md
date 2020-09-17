@@ -53,11 +53,17 @@
 - Database
 
 ```bash
-    make initdb
-
-    flask db migrate
+    # Inicial migration
+    flask db init
+    flask db migrate -m "Initial migration"
     flask db upgrade
 
+    # After git clone
+    make initdb
+    flask db migrate -m "Comment migration"
+    flask db upgrade
+
+    # Admin commands
     flask createadb
     flask createadmin
     flask createuser
