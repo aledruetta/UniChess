@@ -57,8 +57,6 @@ def create():
         board={"svg": UniBoard.render_base(), "id": uniboard.random_id},
         move_form=move_form,
         modal_form=modal_form,
-        modal=session["modal"],
-        auth=session.get("auth", None),
     )
 
 
@@ -90,8 +88,6 @@ def join():
         board={"svg": UniBoard.render_base(), "id": None},
         move_form=move_form,
         modal_form=modal_form,
-        modal=session["modal"],
-        auth=session.get("auth", None),
     )
 
 
@@ -123,8 +119,6 @@ def play():
         },
         move_form=form,
         modal_form=None,
-        modal=None,
-        auth=session.get("auth", None),
     )
 
 

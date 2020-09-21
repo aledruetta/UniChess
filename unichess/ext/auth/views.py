@@ -78,7 +78,7 @@ def signup():
         return redirect(url_for("site.index"))
 
     return render_template(
-        "signup.html", title="Sign up", form=signup_form, auth=None
+        "signup.html", title="Sign up", form=signup_form
     )
 
 
@@ -99,7 +99,7 @@ def login():
             return redirect(url_for("site.index"))
 
     return render_template(
-        "login.html", title="Login", form=login_form, auth=None
+        "login.html", title="Login", form=login_form
     )
 
 
