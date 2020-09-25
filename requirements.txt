@@ -1,5 +1,6 @@
 email_validator
 flask
+flask-admin
 flask-cors
 flask-login
 flask-restful

@@ -1,5 +1,4 @@
 import click
-
 from sqlalchemy.exc import OperationalError
 
 from unichess.ext.db import db

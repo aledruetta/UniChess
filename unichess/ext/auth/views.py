@@ -77,9 +77,7 @@ def signup():
 
         return redirect(url_for("site.index"))
 
-    return render_template(
-        "signup.html", title="Sign up", form=signup_form
-    )
+    return render_template("signup.html", title="Sign up", form=signup_form)
 
 
 @bp.route("/login", methods=["GET", "POST"])
@@ -98,9 +96,7 @@ def login():
 
             return redirect(url_for("site.index"))
 
-    return render_template(
-        "login.html", title="Login", form=login_form
-    )
+    return render_template("login.html", title="Login", form=login_form)
 
 
 @bp.route("/logout")

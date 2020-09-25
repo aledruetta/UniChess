@@ -9,6 +9,10 @@ def init_app(app):
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+    # Admin
+    app.config["FLASK_ADMIN_SWATCH"] = "flatly"
+
+    # Debug
     if app.debug:
         app.config["DEBUG_TB_ENABLED"] = True
         app.config["DEBUG_TB_TEMPLATE_EDITOR_ENABLED"] = True

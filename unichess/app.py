@@ -2,7 +2,17 @@
 
 from flask import Flask
 
-from unichess.ext import auth, cli, config, db, engine, site, socket, toolbar
+from unichess.ext import (
+    admin,
+    auth,
+    cli,
+    config,
+    db,
+    engine,
+    site,
+    socket,
+    toolbar,
+)
 
 
 def create_app():
@@ -10,8 +20,9 @@ def create_app():
 
     config.init_app(app)
     db.init_app(app)
-    cli.init_app(app)
     auth.init_app(app)
+    admin.init_app(app)
+    cli.init_app(app)
     engine.init_app(app)
     site.init_app(app)
     socket.init_app(app)
