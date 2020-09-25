@@ -2,17 +2,7 @@
 
 from flask import Flask
 
-from unichess.ext import (
-    admin,
-    auth,
-    cli,
-    config,
-    db,
-    engine,
-    site,
-    socket,
-    toolbar,
-)
+from .ext import admin, auth, cli, config, db, engine, site, socket, toolbar
 
 
 def create_app():

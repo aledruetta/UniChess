@@ -1,5 +1,5 @@
-from unichess.ext.auth import createadmin, createuser, listusers
-from unichess.ext.db.commands import createdb, dropdb, truncatedb
+from .auth import createadmin, createuser, listusers
+from .db.commands import createdb, dropdb, truncatedb
 
 
 def init_app(app):

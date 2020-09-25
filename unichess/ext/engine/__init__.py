@@ -1,4 +1,5 @@
 from .control import UniBoard  # noqa
+from .models import Board, Movement  # noqa
 from .views import bp
 
 
