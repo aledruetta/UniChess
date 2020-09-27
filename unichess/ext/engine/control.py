@@ -68,7 +68,8 @@ class UniBoard(chess.Board):
         if not random_id:
             random_id = self.random_id
 
-        Board.query.filter_by(random_id=random_id).delete()
+        board = Board.query.filter_by(random_id=random_id).first()
+        db.session.delete(board)
         db.session.commit()
 
     def add_guest(self, guest_id):

@@ -28,7 +28,10 @@ class Board(db.Model):
     )
 
     movements = db.relationship(
-        "Movement", backref=db.backref("board", lazy=True)
+        "Movement",
+        cascade="all, delete, delete-orphan",
+        backref="board",
+        lazy=True,
     )
 
     def __repr__(self):
