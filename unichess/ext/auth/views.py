@@ -88,11 +88,8 @@ def login():
         if user := User.validate(
             login_form.email.data, login_form.password.data
         ):
-
-            session["auth"] = {
-                "is_auth": user.is_authenticated,
-                "username": user.username,
-            }
+            session["is_auth"] = user.is_authenticated
+            session["username"] = user.username
 
             return redirect(url_for("site.index"))
 
@@ -103,6 +100,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    session["auth"] = None
+    session["is_auth"] = None
+    session["username"] = None
 
     return redirect(url_for("site.index"))

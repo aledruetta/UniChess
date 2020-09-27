@@ -9,7 +9,6 @@ from .engine import Board, Movement
 
 
 class AdminView(ModelView):
-
     @login_required
     def is_accessible(self):
         if current_user.is_authenticated and current_user.is_admin:
