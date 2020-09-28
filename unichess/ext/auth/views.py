@@ -1,5 +1,6 @@
 from flask import (
     Blueprint,
+    flash,
     redirect,
     render_template,
     request,
@@ -92,6 +93,8 @@ def login():
             session["username"] = user.username
 
             return redirect(url_for("site.index"))
+        else:
+            flash("Usuário ou senha inválida!", "is-danger")
 
     return render_template("login.html", title="Login", form=login_form)
 

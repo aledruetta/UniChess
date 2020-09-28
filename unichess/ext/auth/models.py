@@ -57,12 +57,12 @@ class User(UserMixin, db.Model):
     def validate(cls, email, password):
         user = cls.query.filter_by(email=email).first()
 
-        if user.check_password(password):
+        if user and user.check_password(password):
             db.session.add(user)
             db.session.commit()
             login_user(user, remember=True)
-
             return user
+
         return None
 
     # UserMixin methods:

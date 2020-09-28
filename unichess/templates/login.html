@@ -43,6 +43,16 @@
               </p>
             </div>
 
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+              <p class="help {{ category }}">
+                {{ message }}
+              </p>
+              {% endfor %}
+            {% endif %}
+            {% endwith %}
+
           </form>
         </div>
 
