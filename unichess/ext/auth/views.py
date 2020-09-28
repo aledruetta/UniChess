@@ -70,13 +70,16 @@ def signup():
 
     if request.method == "POST" and signup_form.validate_on_submit():
 
-        User.create(
+        user = User.create(
             signup_form.username.data,
             signup_form.email.data,
             signup_form.password.data,
         )
 
-        return redirect(url_for("site.index"))
+        if not user:
+            flash("O usuário já existe!", "is-danger")
+        else:
+            return redirect(url_for("site.index"))
 
     return render_template("signup.html", title="Sign up", form=signup_form)
 

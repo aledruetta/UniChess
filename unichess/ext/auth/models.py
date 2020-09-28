@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask_login import UserMixin, login_user
+from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from unichess.ext.db import db
@@ -44,8 +45,11 @@ class User(UserMixin, db.Model):
         )
         user.set_password(password)
 
-        db.session.add(user)
-        db.session.commit()
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except IntegrityError:
+            return None
 
         return user
 
